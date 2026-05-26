@@ -1,1 +1,0 @@
-columnInfoRecordsAggregate = 6
