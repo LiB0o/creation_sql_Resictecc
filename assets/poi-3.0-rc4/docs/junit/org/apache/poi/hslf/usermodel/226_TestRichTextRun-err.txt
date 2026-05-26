@@ -1,4 +1,0 @@
-Skipping test, as would be marked as failed due to bug #39800
-Skipping test, as would be marked as failed due to bug #39800
-Skipping test, as would be marked as failed due to bug #39800
-Skipping test, as would be marked as failed due to bug #39800
