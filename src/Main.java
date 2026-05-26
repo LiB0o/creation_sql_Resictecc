@@ -6,10 +6,7 @@ import java.util.List;
 
 import samu_intervention.*;
 import localisation.*;
-import staff.Job;
-import staff.SAMU;
-import staff.SMUR;
-import staff.User;
+import staff.*;
 import vecteur_et_details.*;
 
 public class Main {
@@ -33,7 +30,9 @@ public class Main {
             //Vecteur.insertSQL(URL_OP,USER,PASSWORD);
             //Materiel.insertSQL(URL_OP,USER,PASSWORD);
             //Job.insertSQL(URL_OP,USER,PASSWORD);
-            User.insertSQL(URL_OP,USER,PASSWORD);
+            //User.insertSQL(URL_OP,USER,PASSWORD);
+
+            //Join_Staff_Job.insertSQL(URL_OP,USER,PASSWORD);
 
             /*List<User> users = User.generateAllMaleUser("password",10);
             for(User u : users){
