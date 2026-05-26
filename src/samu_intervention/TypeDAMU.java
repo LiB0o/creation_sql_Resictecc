@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -71,18 +72,24 @@ public class TypeDAMU {
         }
     }
 
-    public static void insertSQL() throws IOException {
+    public static void insertSQL(String url,
+                                 String user,
+                                 String password) throws IOException {
+        Connection conn = null;
+        List<TypeDAMU> listTypeDamu = generateAllTypeDAMU();
         try{
-            List<TypeDAMU> list = generateAllTypeDAMU();
-            FileWriter writer = new FileWriter("assets/sql_inserts.txt",true);
+            conn = DriverManager.getConnection(url,user,password);
+            System.out.println("Connected to the DB");
 
-            for(TypeDAMU t : list){
-                writer.write("INSERT INTO "+TABLENAME+" VALUES('"+t.getName()+"');\n");
+            for(TypeDAMU t : listTypeDamu){
+                String sql = "INSERT INTO `llx_resisteccsamusmur_type_bamu`(`nom`) " +
+                        "VALUES (?)";
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setString(1, t.getName());
+                preparedStatement.executeUpdate();
             }
-            writer.close();
         }
-        catch(IOException e) {
-            System.out.println("An error occurred.");
+        catch(SQLException e) {
             e.printStackTrace();
         }
     }

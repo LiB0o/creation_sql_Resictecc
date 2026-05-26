@@ -1,0 +1,1 @@
+TypeLocalisation{id='AV', name='Avenue'}TypeLocalisation{id='B', name='Boulevard'}TypeLocalisation{id='N', name='Nationale'}TypeLocalisation{id='AU', name='Autoroute'}

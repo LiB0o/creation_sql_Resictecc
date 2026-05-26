@@ -9,6 +9,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -86,17 +90,25 @@ public class TypeLocalisation {
         }
     }
 
-    public static void insertSQL() throws IOException {
+    public static void insertSQL(String url,
+                                 String user,
+                                 String password) throws IOException {
         try{
+            Connection conn = null;
             List<TypeLocalisation> list = generateAllTypeLocalisation();
-            FileWriter writer = new FileWriter("assets/sql_inserts.txt",true);
+            conn = DriverManager.getConnection(url,user,password);
+            System.out.println("Connected to the DB");
 
-            for(TypeLocalisation t : list){
-                writer.write("INSERT INTO "+TABLENAME+" VALUES('"+t.getId()+"','"+t.getName()+"');\n");
+            for(TypeLocalisation tl : list){
+                String sql = "INSERT INTO `llx_resisteccsamusmur_type_localisation`(`type_localisation_nom`, `abreviation`) " +
+                        "VALUES (?,?)";
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setString(1, tl.getName());
+                preparedStatement.setString(2, tl.getId());
+                preparedStatement.executeUpdate();
             }
-            writer.close();
         }
-        catch(IOException e) {
+        catch(SQLException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
