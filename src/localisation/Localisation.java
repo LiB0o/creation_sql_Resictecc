@@ -37,13 +37,7 @@ public class Localisation {
 
     @Override
     public String toString() {
-        return "Localisation{" +
-                "id='" + id + '\'' +
-                ", num_location=" + num_location +
-                ", name_location='" + name_location + '\'' +
-                ", code_postal=" + code_postal +
-                ", id_type_location=" + id_type_location +
-                '}';
+        return num_location + " " + name_location + ", " + code_postal;
     }
 
     public void setId(String id) {
@@ -68,10 +62,13 @@ public class Localisation {
             for(int i = 0; i<nb_location; i++){
                 int lineName = rand.nextInt(1,nbOfLocationNames);
                 int typeLocationPos = rand.nextInt(0,list_type_location_size);
-
+                int numLocation = rand.nextInt(100)+1;
                 String name_location = sheet.getRow(lineName).cellIterator().next().getStringCellValue();
+                name_location = list_type_localisation.get(typeLocationPos).getName() + " "+name_location;
+                int codePostal = rand.nextInt(86000,87000)+1;
 
-                
+                Localisation temp = new Localisation(numLocation,name_location,codePostal,typeLocationPos);
+                list_localisation.add(temp);
             }
 
             // Closing the workbook to free resources
@@ -85,6 +82,9 @@ public class Localisation {
 
 
     public static void main(String[] args) throws IOException{
-        generateAllLocation(3);
+        List<Localisation> localisations = generateAllLocation(3);
+        for(Localisation l : localisations){
+            System.out.println(l.toString());
+        }
     }
 }
