@@ -27,6 +27,7 @@ public class Skill {
     private String description;
     private Date date_creation;
     private int date_validite;
+    private int id;
 
     public String getLabel() {
         return label;
@@ -44,24 +45,31 @@ public class Skill {
         return date_validite;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Skill() {
         this.label = null;
         this.description = null;
         this.date_creation = null;
         this.date_validite = -1;
+        this.id = -1;
     }
 
-    public Skill(String label, String desc, Date dc, int dv) {
+    public Skill(int id, String label, String desc, Date dc, int dv) {
         this.label = label;
         this.description = desc;
         this.date_validite = dv;
         this.date_creation = dc;
+        this.id = id;
     }
 
     @Override
     public String toString() {
         return "Skill{" + "label='" + label + "\'" +
-                ", description='" + description +
+                ", description='" + description + "\'" +
+                ", rowid=" + id +
                 ", date_creation='" + date_creation + "\'" +
                 ", date_validite='" + date_validite + "\'}";
     }
@@ -124,12 +132,13 @@ public class Skill {
             ResultSet resultSQL = stat.executeQuery(sql);
 
             while (resultSQL.next()) {
+                int id = resultSQL.getInt("rowid");
                 String nom = resultSQL.getString("label");
                 String desc = resultSQL.getString("description");
                 Date dc = resultSQL.getDate("date_creation");
                 int dv = resultSQL.getInt("date_validite");
 
-                Skill v = new Skill(nom,desc,dc,dv);
+                Skill v = new Skill(id,nom,desc,dc,dv);
                 skills.add(v);
             }
 
