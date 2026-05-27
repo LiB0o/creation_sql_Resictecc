@@ -6,6 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import staff.Job;
 import staff.SMUR;
+import staff.User;
 import utilitaire.Utils;
 
 import java.io.File;
@@ -141,9 +142,10 @@ public class Skill {
 
     public static void insertSQL(String url,
                                  String user,
-                                 String password) throws IOException {
+                                 String password) throws IOException, SQLException {
         Connection conn = null;
         List<Skill> listSkill = generateAllSkill();
+        List<User> listUser = User.collectSQL(url, user, password);
         try{
             conn = DriverManager.getConnection(url,user,password);
             System.out.println("Connected to the DB");
@@ -151,13 +153,14 @@ public class Skill {
             for(Skill s : listSkill){
                 String sql =
                         "INSERT INTO `llx_hrm_skill` (`label`, `description`, `skill_type`, `date_creation`, `fk_user_creat`, `required_level`, `date_validite`, `temps_theorique`)" +
-                        "VALUES (?, ?, 1, ?, 15000, 0, ?, 0)";
+                        "VALUES (?, ?, 1, ?, ?, 0, ?, 0)";
 
                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setString(1, s.getLabel());
                 preparedStatement.setString(2, s.getDescription());
                 preparedStatement.setDate(3, s.getDate_creation());
-                preparedStatement.setInt(4, s.getDate_validite());
+                preparedStatement.setInt(4, listUser.getFirst().getRowid());
+                preparedStatement.setInt(5, s.getDate_validite());
                 preparedStatement.executeUpdate();
             }
         }
