@@ -35,7 +35,7 @@ public class TypeDAMU {
                 '}';
     }
 
-    public static List<TypeDAMU> generateAllTypeDAMU() throws IOException {
+    public static List<TypeDAMU> generateAllTypeDAMU() {
         try{
             List<TypeDAMU> typesBAMU = new ArrayList<TypeDAMU>();
             FileInputStream file = new FileInputStream(new File("assets/GL_SQL_datas.xlsx"));

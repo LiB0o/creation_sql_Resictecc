@@ -263,7 +263,7 @@ public class Vecteur {
                         "`date_controle`, " +
                         "`statut_vecteur`, " +
                         "`id_type_vecteur`, " +
-                        "`idSMUR`)"+
+                        "`id_smur`)"+
                         "VALUES (?,?,?,?,?,?,?)";
                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setString(1, v.getImmatriculation());
@@ -306,7 +306,7 @@ public class Vecteur {
                 Date date_last_checkup = resultSQL.getDate("date_controle");
                 String status = resultSQL.getString("statut_vecteur");
                 int id_type_vecteur = resultSQL.getInt( "id_type_vecteur");
-                int id_SMUR= resultSQL.getInt( "idSMUR");
+                int id_SMUR= resultSQL.getInt( "id_smur");
 
                 Vecteur v = new Vecteur(immatriculation,nbKM,date_aquis,date_last_checkup,status,id_type_vecteur,id_SMUR);
                 vecteurs.add(v);
