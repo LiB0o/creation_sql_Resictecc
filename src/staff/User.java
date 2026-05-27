@@ -9,11 +9,9 @@ import utilitaire.Utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 public class User {
 
@@ -34,6 +32,7 @@ public class User {
     private static  final String TABLENAME = "llx_user";
     private final static String PASSWORD = "password";
 
+    private int rowid;
     private int role_code;
     private int bool_admin; // 0 or 1
     private Date date_crea_compte;
@@ -57,11 +56,16 @@ public class User {
             this.bool_admin = 0;
         }
 
+        this.rowid = -1;
         this.login = null;
         this.password = null;
         this.lastname = null;
         this.firstname = null;
 
+    }
+
+    public void setRowid(int rowid) {
+        this.rowid = rowid;
     }
 
     public void setAdresse(String adresse) {
@@ -108,6 +112,9 @@ public class User {
         this.password = password;
     }
 
+    public int getRowid() {
+        return rowid;
+    }
 
     @Override
     public String toString() {
@@ -297,4 +304,39 @@ public class User {
 
         return resultat;
     }
+
+    public static List<User> collectSQL(String url,
+                                       String user,
+                                       String password) throws SQLException {
+        try {
+            List<User> users = new ArrayList<>();
+
+            Connection conn = null;
+            Statement stat = null;
+
+            conn = DriverManager.getConnection(url, user, password);
+            System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * FROM llx_user";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while (resultSQL.next()) {
+
+                int id = resultSQL.getInt("rowid");
+                //java.sql.Date date_aquis = resultSQL.getDate("date_creation");
+                //String label = resultSQL.getString("label");
+
+                User v = new User(false);
+                v.setRowid(id);
+                users.add(v);
+            }
+
+            return users;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

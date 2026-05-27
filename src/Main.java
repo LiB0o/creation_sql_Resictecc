@@ -11,6 +11,7 @@ import staff.Job;
 import staff.SAMU;
 import staff.SMUR;
 import staff.User;
+import staff.*;
 import vecteur_et_details.*;
 
 public class Main {
@@ -36,6 +37,8 @@ public class Main {
             //Job.insertSQL(URL_OP,USER,PASSWORD);
             //User.insertSQL(URL_OP,USER,PASSWORD);
             Skill.insertSQL(URL_OP, USER, PASSWORD);
+
+            //Join_Staff_Job.insertSQL(URL_OP,USER,PASSWORD);
 
             /*List<User> users = User.generateAllMaleUser("password",10);
             for(User u : users){
