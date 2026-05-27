@@ -6,6 +6,11 @@ import java.util.List;
 
 import samu_intervention.*;
 import localisation.*;
+import skill.Skill;
+import staff.Job;
+import staff.SAMU;
+import staff.SMUR;
+import staff.User;
 import staff.*;
 import vecteur_et_details.*;
 
@@ -31,6 +36,7 @@ public class Main {
             //Materiel.insertSQL(URL_OP,USER,PASSWORD);
             //Job.insertSQL(URL_OP,USER,PASSWORD);
             //User.insertSQL(URL_OP,USER,PASSWORD);
+            Skill.insertSQL(URL_OP, USER, PASSWORD);
 
             //Join_Staff_Job.insertSQL(URL_OP,USER,PASSWORD);
 
