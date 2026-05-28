@@ -1,7 +1,10 @@
 package utilitaire;
 
 import java.time.LocalDate;
+import java.util.List;
+
 import org.mindrot.jbcrypt.BCrypt;
+import organisme_soin.TeleMedicalisation;
 
 public class Utils {
 
@@ -23,5 +26,14 @@ public class Utils {
 
     public static void main(String[] args) {
         Utils.chiffrementPassword("password");
+    }
+
+    public List<TeleMedicalisation> setIds(List<TeleMedicalisation> meds){
+        int index = 1;
+        for(TeleMedicalisation t : meds){
+            t.setId("MED"+index);
+            index++;
+        }
+        return meds;
     }
 }
