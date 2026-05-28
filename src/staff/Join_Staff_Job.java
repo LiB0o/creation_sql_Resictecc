@@ -121,4 +121,27 @@ public class Join_Staff_Job {
             e.printStackTrace();
         }
     }
+
+    public static List<Join_Staff_Job> collectSQL(String url, String user, String password) {
+        try {
+            List<Join_Staff_Job> list = new ArrayList<>();
+
+            Connection conn = DriverManager.getConnection(url, user, password);
+            Statement stat = conn.createStatement();
+            ResultSet rs = stat.executeQuery("SELECT fk_user, fk_job, date_creation FROM llx_hrm_job_user");
+
+            while (rs.next()) {
+                Join_Staff_Job j = new Join_Staff_Job();
+                j.setId_user(rs.getInt("fk_user"));
+                j.setId_job(rs.getInt("fk_job"));
+                j.setDate_creation(rs.getDate("date_creation"));
+                list.add(j);
+            }
+
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

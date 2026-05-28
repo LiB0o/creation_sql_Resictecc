@@ -11,12 +11,10 @@ import staff.User;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
+import java.sql.Date;
 
 public class Join_Skill_Job {
     private static final String TABLENAME = "llx_hrm_skillrank";
@@ -114,13 +112,43 @@ public class Join_Skill_Job {
                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setInt(1, j.id_skill);
                 preparedStatement.setInt(2,j.id_job);
-                preparedStatement.setDate(3, (java.sql.Date) j.date_creation);
+                preparedStatement.setDate(3, j.date_creation);
                 preparedStatement.setInt(4, listUser.getFirst().getRowid());
                 preparedStatement.executeUpdate();
             }
         }
-        catch(SQLException e) {
+        catch(Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public static List<Skill> collectSkillsByJob(Connection conn, int jobId) {
+        try {
+            List<Skill> skills = new ArrayList<>();
+
+            String sql = "SELECT s.rowid, s.label, s.description, s.date_creation, s.date_validite " +
+                    "FROM llx_hrm_skill s " +
+                    "JOIN llx_hrm_skillrank sr ON sr.fk_skill = s.rowid " +
+                    "WHERE sr.fk_object = ? AND sr.objecttype = 'job'";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, jobId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int id        = rs.getInt("rowid");
+                String label  = rs.getString("label");
+                String desc   = rs.getString("description");
+                Date dc       = rs.getDate("date_creation");
+                int dv        = rs.getInt("date_validite");
+                skills.add(new Skill(id, label, desc, dc, dv));
+            }
+
+            return skills;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
