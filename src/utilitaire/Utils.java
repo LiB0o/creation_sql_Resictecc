@@ -28,12 +28,4 @@ public class Utils {
         Utils.chiffrementPassword("password");
     }
 
-    public List<TeleMedicalisation> setIds(List<TeleMedicalisation> meds){
-        int index = 1;
-        for(TeleMedicalisation t : meds){
-            t.setId("MED"+index);
-            index++;
-        }
-        return meds;
-    }
 }
