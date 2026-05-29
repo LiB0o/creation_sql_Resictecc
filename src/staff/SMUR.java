@@ -111,13 +111,11 @@ public class SMUR {
     public static List<SMUR> collectSQL(String url,
                                                String user,
                                                String password) throws SQLException {
-        try {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             List<SMUR> smurs = new ArrayList<>();
 
-            Connection conn = null;
             Statement stat = null;
 
-            conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connected to the DB");
 
             stat = conn.createStatement();
@@ -143,10 +141,8 @@ public class SMUR {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException {
-        Connection conn = null;
         List<SMUR> listSMUR = generateAllSMUR();
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(SMUR s : listSMUR){

@@ -100,10 +100,8 @@ public class SAMU {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException {
-        Connection conn = null;
         List<SAMU> listSAMU = generateAllSAMU();
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(SAMU s : listSAMU){

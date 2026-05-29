@@ -97,10 +97,8 @@ public class Job {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
-        Connection conn = null;
         List<Job> listJobs = generateAllJob();
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(Job j : listJobs){
@@ -123,13 +121,11 @@ public class Job {
     public static List<Job> collectSQL(String url,
                                            String user,
                                            String password) throws SQLException {
-        try {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             List<Job> jobs = new ArrayList<>();
 
-            Connection conn = null;
             Statement stat = null;
 
-            conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connected to the DB");
 
             stat = conn.createStatement();

@@ -10,11 +10,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Join_Staff_Job {
 
@@ -97,10 +95,8 @@ public class Join_Staff_Job {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
-        Connection conn = null;
         List<Join_Staff_Job> listJoin = Join_Staff_Job.generateAllJoin(url,user,password);
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(Join_Staff_Job j : listJoin){
@@ -123,10 +119,9 @@ public class Join_Staff_Job {
     }
 
     public static List<Join_Staff_Job> collectSQL(String url, String user, String password) {
-        try {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             List<Join_Staff_Job> list = new ArrayList<>();
 
-            Connection conn = DriverManager.getConnection(url, user, password);
             Statement stat = conn.createStatement();
             ResultSet rs = stat.executeQuery("SELECT fk_user, fk_job, date_creation FROM llx_hrm_job_user");
 
@@ -142,6 +137,54 @@ public class Join_Staff_Job {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static boolean hasSMURJob(String url, String user, String password, int id_user) {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+            String sql = "SELECT j.label FROM llx_hrm_job j " +
+                        "JOIN llx_hrm_job_user ju ON j.rowid = ju.fk_job " +
+                        "WHERE ju.fk_user = ?";
+            PreparedStatement p = conn.prepareStatement(sql);
+            p.setInt(1,id_user);
+
+            ResultSet resultSet = p.executeQuery();
+            while (resultSet.next()){
+                String name = resultSet.getString("label");
+                if(Objects.equals(name, "Infirmier") || Objects.equals(name, "Médecin") || Objects.equals(name, "Ambulancier") || Objects.equals(name, "RH SMUR")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean isCESUStaff(String url, String user, String password, int id_user) {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+            String sql = "SELECT j.label FROM llx_hrm_job j " +
+                    "JOIN llx_hrm_job_user ju ON j.rowid = ju.fk_job " +
+                    "WHERE ju.fk_user = ?";
+            PreparedStatement p = conn.prepareStatement(sql);
+            p.setInt(1,id_user);
+
+            ResultSet resultSet = p.executeQuery();
+            while (resultSet.next()){
+                String name = resultSet.getString("label");
+                if(Objects.equals(name, "CESU staff")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

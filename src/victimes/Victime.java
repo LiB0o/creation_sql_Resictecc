@@ -194,13 +194,11 @@ public class Victime {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
-        Connection conn = null;
         List<Victime>users = generateVictimesFemale(30);
         users.addAll(generateVictimesMale(30));
         Random rand = new Random();
 
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(Victime u : users){

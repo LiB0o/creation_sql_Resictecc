@@ -248,10 +248,8 @@ public class Vecteur {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
-        Connection conn = null;
         List<Vecteur> listVecteur = generateAllVecteur(url,user,password);
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(Vecteur v : listVecteur){
@@ -285,13 +283,11 @@ public class Vecteur {
     public static List<Vecteur> collectSQL(String url,
                                                String user,
                                                String password) throws SQLException {
-        try {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             List<Vecteur> vecteurs = new ArrayList<>();
 
-            Connection conn = null;
             Statement stat = null;
 
-            conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connected to the DB");
 
             stat = conn.createStatement();

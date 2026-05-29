@@ -75,10 +75,8 @@ public class TypeDAMU {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException {
-        Connection conn = null;
         List<TypeDAMU> listTypeDamu = generateAllTypeDAMU();
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(TypeDAMU t : listTypeDamu){
