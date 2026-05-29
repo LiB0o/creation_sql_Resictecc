@@ -6,6 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import staff.Job;
 import staff.SMUR;
+import staff.User;
 import utilitaire.Utils;
 
 import java.io.File;
@@ -26,6 +27,7 @@ public class Skill {
     private String description;
     private Date date_creation;
     private int date_validite;
+    private int id;
 
     public String getLabel() {
         return label;
@@ -43,24 +45,31 @@ public class Skill {
         return date_validite;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Skill() {
         this.label = null;
         this.description = null;
         this.date_creation = null;
         this.date_validite = -1;
+        this.id = -1;
     }
 
-    public Skill(String label, String desc, Date dc, int dv) {
+    public Skill(int id, String label, String desc, Date dc, int dv) {
         this.label = label;
         this.description = desc;
         this.date_validite = dv;
         this.date_creation = dc;
+        this.id = id;
     }
 
     @Override
     public String toString() {
         return "Skill{" + "label='" + label + "\'" +
-                ", description='" + description +
+                ", description='" + description + "\'" +
+                ", rowid=" + id +
                 ", date_creation='" + date_creation + "\'" +
                 ", date_validite='" + date_validite + "\'}";
     }
@@ -123,12 +132,13 @@ public class Skill {
             ResultSet resultSQL = stat.executeQuery(sql);
 
             while (resultSQL.next()) {
+                int id = resultSQL.getInt("rowid");
                 String nom = resultSQL.getString("label");
                 String desc = resultSQL.getString("description");
                 Date dc = resultSQL.getDate("date_creation");
                 int dv = resultSQL.getInt("date_validite");
 
-                Skill v = new Skill(nom,desc,dc,dv);
+                Skill v = new Skill(id,nom,desc,dc,dv);
                 skills.add(v);
             }
 
@@ -141,9 +151,10 @@ public class Skill {
 
     public static void insertSQL(String url,
                                  String user,
-                                 String password) throws IOException {
+                                 String password) throws IOException, SQLException {
         Connection conn = null;
         List<Skill> listSkill = generateAllSkill();
+        List<User> listUser = User.collectSQL(url, user, password);
         try{
             conn = DriverManager.getConnection(url,user,password);
             System.out.println("Connected to the DB");
@@ -151,13 +162,14 @@ public class Skill {
             for(Skill s : listSkill){
                 String sql =
                         "INSERT INTO `llx_hrm_skill` (`label`, `description`, `skill_type`, `date_creation`, `fk_user_creat`, `required_level`, `date_validite`, `temps_theorique`)" +
-                        "VALUES (?, ?, 1, ?, 15000, 0, ?, 0)";
+                        "VALUES (?, ?, 1, ?, ?, 0, ?, 0)";
 
                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setString(1, s.getLabel());
                 preparedStatement.setString(2, s.getDescription());
                 preparedStatement.setDate(3, s.getDate_creation());
-                preparedStatement.setInt(4, s.getDate_validite());
+                preparedStatement.setInt(4, listUser.getFirst().getRowid());
+                preparedStatement.setInt(5, s.getDate_validite());
                 preparedStatement.executeUpdate();
             }
         }
