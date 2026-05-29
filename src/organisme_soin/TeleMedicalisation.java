@@ -264,7 +264,6 @@ public class TeleMedicalisation {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
-        Connection conn = null;
         Utils Utils = new Utils();
 
         List<TeleMedicalisation>users = generateMedFemale(30);
@@ -272,8 +271,7 @@ public class TeleMedicalisation {
         users = Utils.setIds(users);
         Random rand = new Random();
 
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(TeleMedicalisation u : users){

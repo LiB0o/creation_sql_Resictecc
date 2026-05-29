@@ -244,14 +244,12 @@ public class User {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
-        Connection conn = null;
         List<User>users_temp = generateAllFemaleUser("password",30);
         users_temp.addAll(generateAllMaleUser("password",30));
 
         List<User> users = User.rendreUniques(users_temp);
 
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(User u : users){
@@ -308,13 +306,11 @@ public class User {
     public static List<User> collectSQL(String url,
                                        String user,
                                        String password) throws SQLException {
-        try {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             List<User> users = new ArrayList<>();
 
-            Connection conn = null;
             Statement stat = null;
 
-            conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connected to the DB");
 
             stat = conn.createStatement();

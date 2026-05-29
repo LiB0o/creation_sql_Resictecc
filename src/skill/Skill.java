@@ -118,13 +118,11 @@ public class Skill {
     }
 
     public static List<Skill> collectSQL(String url, String user, String password) {
-        try {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             List<Skill> skills = new ArrayList<>();
 
-            Connection conn = null;
             Statement stat = null;
 
-            conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connected to the DB");
 
             stat = conn.createStatement();
@@ -152,11 +150,9 @@ public class Skill {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
-        Connection conn = null;
         List<Skill> listSkill = generateAllSkill();
         List<User> listUser = User.collectSQL(url, user, password);
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(Skill s : listSkill){

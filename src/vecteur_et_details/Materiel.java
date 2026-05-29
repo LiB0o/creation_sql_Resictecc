@@ -161,10 +161,8 @@ public class Materiel {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException {
-        Connection conn = null;
         List<Materiel> listMateriel = generateAllMateriel(url,user,password);
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(Materiel m : listMateriel){

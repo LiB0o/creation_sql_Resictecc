@@ -92,11 +92,9 @@ public class Join_Skill_Job {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
-        Connection conn = null;
         List<Join_Skill_Job> listJoin = Join_Skill_Job.generateAllJoin(url,user,password);
         List<User> listUser = User.collectSQL(url, user, password);
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(Join_Skill_Job j : listJoin){

@@ -93,10 +93,8 @@ public class TypeLocalisation {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException {
-        try{
-            Connection conn = null;
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             List<TypeLocalisation> list = generateAllTypeLocalisation();
-            conn = DriverManager.getConnection(url,user,password);
             System.out.println("Connected to the DB");
 
             for(TypeLocalisation tl : list){

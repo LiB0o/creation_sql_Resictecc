@@ -45,7 +45,8 @@ public class Main {
 
             //Join_Skill_Job.insertSQL(URL_OP,USER,PASSWORD);
             //Join_Staff_Job.insertSQL(URL_OP,USER,PASSWORD);
-            Join_Skill_User.insertSQL(URL_OP,USER,PASSWORD);
+            //Join_Skill_User.insertSQL(URL_OP,USER,PASSWORD);
+            Join_SMUR_User.insertSQL(URL_OP,USER,PASSWORD);
 
             //Victime.insertSQL(URL_OP,USER,PASSWORD);
 
