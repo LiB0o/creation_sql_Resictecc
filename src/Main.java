@@ -9,6 +9,8 @@ import organisme_soin.Ambulance;
 import organisme_soin.TeleMedicalisation;
 import samu_intervention.*;
 import localisation.*;
+import skill.Join_Skill_Job;
+import skill.Join_Skill_User;
 import skill.Skill;
 import staff.Job;
 import staff.SAMU;
@@ -41,7 +43,10 @@ public class Main {
             //Job.insertSQL(URL_OP,USER,PASSWORD);
             //User.insertSQL(URL_OP,USER,PASSWORD);
             //Skill.insertSQL(URL_OP, USER, PASSWORD);
+
+            //Join_Skill_Job.insertSQL(URL_OP,USER,PASSWORD);
             //Join_Staff_Job.insertSQL(URL_OP,USER,PASSWORD);
+            Join_Skill_User.insertSQL(URL_OP,USER,PASSWORD);
 
             //Victime.insertSQL(URL_OP,USER,PASSWORD);
 
