@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 
+import org.apache.poi.ss.formula.functions.T;
+import organisme_soin.TeleMedicalisation;
 import samu_intervention.*;
 import localisation.*;
 import skill.Join_Skill_Job;
@@ -15,6 +17,7 @@ import staff.SMUR;
 import staff.User;
 import staff.*;
 import vecteur_et_details.*;
+import victimes.Victime;
 
 public class Main {
 
@@ -44,11 +47,7 @@ public class Main {
             //Join_Staff_Job.insertSQL(URL_OP,USER,PASSWORD);
             Join_Skill_User.insertSQL(URL_OP,USER,PASSWORD);
 
-            /*List<User> users = User.generateAllMaleUser("password",10);
-            for(User u : users){
-                System.out.println(u.toString());
-            }*/
-
+            //Victime.insertSQL(URL_OP,USER,PASSWORD);
 
             /*conn = DriverManager.getConnection(URL_OP,USER,PASSWORD);
             System.out.println("Connected to the DB");
