@@ -98,15 +98,6 @@ public class Ambulance {
         return  tel;
     }
 
-    public List<Ambulance> setIds(List<Ambulance> meds){
-        int index = 1;
-        for(Ambulance t : meds){
-            t.setId("AMB"+index);
-            index++;
-        }
-        return meds;
-    }
-
     public static List<Ambulance> generateAmbulance(int nbAmbulance) throws IOException {
         List<Ambulance> ambulances = new ArrayList<>();
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.poi.ss.formula.functions.T;
 import organisme_soin.Ambulance;
+import organisme_soin.SDIS;
 import organisme_soin.TeleMedicalisation;
 import samu_intervention.*;
 import localisation.*;
@@ -46,12 +47,19 @@ public class Main {
 
             //Join_Skill_Job.insertSQL(URL_OP,USER,PASSWORD);
             //Join_Staff_Job.insertSQL(URL_OP,USER,PASSWORD);
-            Join_Skill_User.insertSQL(URL_OP,USER,PASSWORD);
+            //Join_Skill_User.insertSQL(URL_OP,USER,PASSWORD);
 
             //Victime.insertSQL(URL_OP,USER,PASSWORD);
 
-            TeleMedicalisation.insertSQL(URL_OP,USER,PASSWORD);
-            Ambulance.insertSQL(URL_OP,USER,PASSWORD);
+            //TeleMedicalisation.insertSQL(URL_OP,USER,PASSWORD);
+            //Ambulance.insertSQL(URL_OP,USER,PASSWORD);
+
+            //SDIS.insertSQL(URL_OP,USER,PASSWORD);
+
+
+
+
+
 
             /*conn = DriverManager.getConnection(URL_OP,USER,PASSWORD);
             System.out.println("Connected to the DB");
