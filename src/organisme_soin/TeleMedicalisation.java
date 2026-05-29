@@ -1,14 +1,12 @@
 package organisme_soin;
 
 import localisation.Localisation;
-import localisation.TypeLocalisation;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import utilitaire.Utils;
-import vecteur_et_details.TypeMateriel;
-import victimes.Victime;
+
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,8 +19,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-
-import static localisation.TypeLocalisation.generateAllTypeLocalisation;
 
 public class TeleMedicalisation {
 
@@ -260,6 +256,14 @@ public class TeleMedicalisation {
         return meds;
     }
 
+    public static List<TeleMedicalisation> setIds(List<TeleMedicalisation> meds){
+        int index = 1;
+        for(TeleMedicalisation t : meds){
+            t.setId("MED"+index);
+            index++;
+        }
+        return meds;
+    }
 
     public static void insertSQL(String url,
                                  String user,
@@ -269,7 +273,7 @@ public class TeleMedicalisation {
 
         List<TeleMedicalisation>users = generateMedFemale(30);
         users.addAll(generateMedMale(30));
-        users = Utils.setIds(users);
+        users = TeleMedicalisation.setIds(users);
         Random rand = new Random();
 
         try{
