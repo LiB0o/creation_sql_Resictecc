@@ -132,10 +132,10 @@ public class User {
                 '}';
     }
 
-    public static List<User> generateAllFemaleUser(String passwordForAll, int nbUser) throws SQLException, IOException {
+    public static List<User> generateAllFemaleUser( int nbUser) throws SQLException, IOException {
 
         List<User> users = new ArrayList<>();
-        String cryptedPassword = Utils.chiffrementPassword(passwordForAll);
+        String cryptedPassword = Utils.chiffrementPassword();
         Random rand = new Random();
 
         FileInputStream file = new FileInputStream(new File("assets/GL_SQL_datas.xlsx"));
@@ -181,10 +181,10 @@ public class User {
         return users;
     }
 
-    public static List<User> generateAllMaleUser(String passwordForAll, int nbUser) throws SQLException, IOException {
+    public static List<User> generateAllMaleUser( int nbUser) throws SQLException, IOException {
 
         List<User> users = new ArrayList<>();
-        String cryptedPassword = Utils.chiffrementPassword(passwordForAll);
+        String cryptedPassword = Utils.chiffrementPassword();
         Random rand = new Random();
 
         FileInputStream file = new FileInputStream(new File("assets/GL_SQL_datas.xlsx"));
@@ -244,8 +244,8 @@ public class User {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
-        List<User>users_temp = generateAllFemaleUser("password",30);
-        users_temp.addAll(generateAllMaleUser("password",30));
+        List<User>users_temp = generateAllFemaleUser(30);
+        users_temp.addAll(generateAllMaleUser(30));
 
         List<User> users = User.rendreUniques(users_temp);
 

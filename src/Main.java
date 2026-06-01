@@ -25,29 +25,29 @@ public class Main {
         Statement stat = null;
 
         try{
-            //TypeDAMU.insertSQL(URL_OP,USER,PASSWORD);
-            //TypeLocalisation.insertSQL(URL_OP,USER,PASSWORD);
-            //TypeMateriel.insertSQL(URL_OP,USER,PASSWORD);
-            //TypeVecteur.insertSQL(URL_OP,USER,PASSWORD);
-            //SAMU.insertSQL(URL_OP,USER,PASSWORD);
-            //SMUR.insertSQL(URL_OP,USER,PASSWORD);
-            //Vecteur.insertSQL(URL_OP,USER,PASSWORD);
-            //Materiel.insertSQL(URL_OP,USER,PASSWORD);
-            //Job.insertSQL(URL_OP,USER,PASSWORD);
-            //User.insertSQL(URL_OP,USER,PASSWORD);
-            //Skill.insertSQL(URL_OP, USER, PASSWORD);
 
-            //Join_Skill_Job.insertSQL(URL_OP,USER,PASSWORD);
-            //Join_Staff_Job.insertSQL(URL_OP,USER,PASSWORD);
-            //Join_Skill_User.insertSQL(URL_OP,USER,PASSWORD);
-            //Join_SMUR_User.insertSQL(URL_OP,USER,PASSWORD);
+            TypeDAMU.insertSQL(URL_OP,USER,PASSWORD);
+            TypeMateriel.insertSQL(URL_OP,USER,PASSWORD);
+            TypeVecteur.insertSQL(URL_OP,USER,PASSWORD);
+            SAMU.insertSQL(URL_OP,USER,PASSWORD);
+            SMUR.insertSQL(URL_OP,USER,PASSWORD);
+            Vecteur.insertSQL(URL_OP,USER,PASSWORD);
+            Materiel.insertSQL(URL_OP,USER,PASSWORD);
+            Job.insertSQL(URL_OP,USER,PASSWORD);
+            User.insertSQL(URL_OP,USER,PASSWORD);
+            Skill.insertSQL(URL_OP, USER, PASSWORD);
 
-            //Victime.insertSQL(URL_OP,USER,PASSWORD);
+            Join_Skill_Job.insertSQL(URL_OP,USER,PASSWORD);
+            Join_Staff_Job.insertSQL(URL_OP,USER,PASSWORD);
+            Join_Skill_User.insertSQL(URL_OP,USER,PASSWORD);
+            Join_SMUR_User.insertSQL(URL_OP,USER,PASSWORD);
 
-            //TeleMedicalisation.insertSQL(URL_OP,USER,PASSWORD);
-            //Ambulance.insertSQL(URL_OP,USER,PASSWORD);
+            Victime.insertSQL(URL_OP,USER,PASSWORD);
 
-            //SDIS.insertSQL(URL_OP,USER,PASSWORD);
+            TeleMedicalisation.insertSQL(URL_OP,USER,PASSWORD);
+            Ambulance.insertSQL(URL_OP,USER,PASSWORD);
+
+            SDIS.insertSQL(URL_OP,USER,PASSWORD);
 
             PDS.insertSQL(URL_OP,USER,PASSWORD);
 
