@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import vecteur_et_details.Vecteur;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +20,7 @@ public class TypeDAMU {
     private static  final String TABLENAME = "llx_resisteccsamusmur_type_bamu";
 
     private String name;
+    private int id;
 
     public String getName() {
         return name;
@@ -26,6 +28,15 @@ public class TypeDAMU {
 
     public TypeDAMU(String name){
         this.name = name;
+        this.id = -1;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
@@ -90,6 +101,35 @@ public class TypeDAMU {
         catch(SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static List<TypeDAMU> collect(String url, String user, String password)throws IOException{
+        List<TypeDAMU> list_DAMU = new ArrayList<>();
+
+        try(Connection conn = DriverManager.getConnection(url, user, password)){
+            Statement stat = null;
+
+            System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * FROM llx_resisteccsamusmur_type_bamu";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while (resultSQL.next()) {
+
+                int id_type_BAMU = resultSQL.getInt("id_type_BAMU");
+                String nom = resultSQL.getString("nom");
+
+                TypeDAMU t = new TypeDAMU(nom);
+                t.setId(id_type_BAMU);
+                list_DAMU.add(t);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return list_DAMU;
     }
 
     /*public static void main(String[] args) throws IOException {
