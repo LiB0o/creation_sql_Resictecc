@@ -25,6 +25,7 @@ public class Main {
         Statement stat = null;
 
         try{
+            
 
             TypeDAMU.insertSQL(URL_OP,USER,PASSWORD);
             TypeMateriel.insertSQL(URL_OP,USER,PASSWORD);
@@ -41,7 +42,8 @@ public class Main {
             Join_Staff_Job.insertSQL(URL_OP,USER,PASSWORD);
             Join_Skill_User.insertSQL(URL_OP,USER,PASSWORD);
             Join_SMUR_User.insertSQL(URL_OP,USER,PASSWORD);
-
+            Join_SAMU_User.insertSQL(URL_OP,USER,PASSWORD);
+          
             Victime.insertSQL(URL_OP,USER,PASSWORD);
 
             TeleMedicalisation.insertSQL(URL_OP,USER,PASSWORD);

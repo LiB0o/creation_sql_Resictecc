@@ -11,10 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +24,8 @@ public class Victime {
     private String sexe;
     private String tel;
     private String adresse;
+    private int id;
+    private int age;
 
     public Victime(){
         this.prenom = null;
@@ -34,10 +33,26 @@ public class Victime {
         this.sexe = null;
         this.adresse = null;
         this.tel = null;
+        this.id = -1;
+        this.age = -1;
+    }
+
+    public Victime(int id, String p, String n, int age, String s, String t, String ad) {
+        this.prenom =p;
+        this.nom=n;
+        this.tel=t;
+        this.sexe=s;
+        this.age=age;
+        this.adresse=ad;
+        this.id=id;
     }
 
     public String getNom() {
         return nom;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getAdresse() {
@@ -247,6 +262,37 @@ public class Victime {
         }
         catch(SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public static List<Victime> collectSQL(String url, String user, String password) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+            List<Victime> listVic = new ArrayList<>();
+            Statement stat = null;
+
+            stat = conn.createStatement();
+            String sql = "SELECT * FROM llx_resisteccsamusmur_victimes";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while(resultSQL.next()){
+                int id = resultSQL.getInt("id_victime");
+                String prenom = resultSQL.getString("prenom");
+                String nom = resultSQL.getString("nom");
+                int age = resultSQL.getInt("age");
+                String sexe = resultSQL.getString("sexe");
+                String tel = resultSQL.getString("tel_victime");
+                String ad = resultSQL.getString("adresse");
+
+                Victime v = new Victime(id,prenom,nom,age,sexe,tel,ad);
+
+                listVic.add(v);
+            }
+
+            return listVic;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
