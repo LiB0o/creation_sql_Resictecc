@@ -102,6 +102,10 @@ public class Victime {
                 '}';
     }
 
+    /**
+     * Generate a random tel number starting with "06"
+     * @return
+     */
     private static String randomTel(){
         String tel = "06";
         Random rand = new Random();
@@ -112,6 +116,12 @@ public class Victime {
         return  tel;
     }
 
+    /**
+     * Read the excel GL_SQL_datas.xlsx to generate a number of male person in a list to be insert in the assigned function
+     * @param nbUser : number of male victime
+     * @return
+     * @throws IOException
+     */
     public static List<Victime> generateVictimesMale(int nbUser) throws IOException {
         List<Victime> victimes = new ArrayList<>();
         //String cryptedPassword = Utils.chiffrementPassword(passwordForAll);
@@ -159,6 +169,12 @@ public class Victime {
         return victimes;
     }
 
+    /**
+     * Read the excel GL_SQL_datas.xlsx to generate a number of female person in a list to be insert in the assigned function
+     * @param nbUser : number of female victime
+     * @return
+     * @throws IOException
+     */
     public static List<Victime> generateVictimesFemale(int nbUser) throws IOException {
         List<Victime> victimes = new ArrayList<>();
         //String cryptedPassword = Utils.chiffrementPassword(passwordForAll);
@@ -170,16 +186,13 @@ public class Victime {
 
         List<Localisation> localisations = Localisation.generateAllLocation(nbUser);
         int nbOfLocationNames = sheet.getPhysicalNumberOfRows();//need for the 3 collumns to have the same nb of rows
-        //System.out.println("Add Female, nb row = "+nbOfLocationNames);
 
         for(int i =0; i<nbUser; i++){
             Victime victime = new Victime();
             victime.setSexe("F");
 
             int lineFirstName = rand.nextInt(1,nbOfLocationNames);
-            //System.out.println("Add Male, nb row fn = "+lineFirstName);
             int lineLastName = rand.nextInt(1, nbOfLocationNames);
-            //System.out.println("Add Male, nb row ln = "+lineLastName);
 
             victime.setTel(Victime.randomTel());
             victime.setAdresse(localisations.get(i).toString());
@@ -206,6 +219,15 @@ public class Victime {
         return victimes;
     }
 
+    /**
+     * insert into the proper table the information of Victims
+     * @param url : the url toward the database
+     * @param user : the login to the database
+     * @param password : the password of the login
+     *                 
+     * @throws IOException
+     * @throws SQLException
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {

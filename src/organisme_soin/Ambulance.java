@@ -111,7 +111,7 @@ public class Ambulance {
             victime.setTel(Ambulance.randomTel());
             victime.setAdresse(localisations.get(i).toString());
             victime.setId("AMB"+(i+1));
-            victime.setNom("Ambulance "+i);
+            victime.setNom("Ambulance "+(i+1));
             victime.setNbAmbulance(rand.nextInt(6));
 
             ambulances.add(victime);
@@ -123,14 +123,13 @@ public class Ambulance {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
-        Connection conn = null;
+
         Utils Utils = new Utils();
 
         List<Ambulance>ambulances = generateAmbulance(10);
         Random rand = new Random();
 
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try(Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(Ambulance a : ambulances){

@@ -1,25 +1,17 @@
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+
 import java.sql.Statement;
 import java.util.List;
 
-import org.apache.poi.ss.formula.functions.T;
-import organisme_soin.Ambulance;
-import organisme_soin.SDIS;
-import organisme_soin.TeleMedicalisation;
-import samu_intervention.*;
-import localisation.*;
-import skill.Join_Skill_Job;
-import skill.Join_Skill_User;
-import skill.Skill;
-import staff.Job;
-import staff.SAMU;
-import staff.SMUR;
-import staff.User;
+
 import staff.*;
+import samu_intervention.*;
+import organisme_soin.*;
+import skill.*;
 import vecteur_et_details.*;
-import victimes.Victime;
+import victimes.*;
+import utilitaire.*;
+
 
 public class Main {
 
@@ -33,32 +25,33 @@ public class Main {
         Statement stat = null;
 
         try{
-            //TypeDAMU.insertSQL(URL_OP,USER,PASSWORD);
-            //TypeLocalisation.insertSQL(URL_OP,USER,PASSWORD);
-            //TypeMateriel.insertSQL(URL_OP,USER,PASSWORD);
-            //TypeVecteur.insertSQL(URL_OP,USER,PASSWORD);
-            //SAMU.insertSQL(URL_OP,USER,PASSWORD);
-            //SMUR.insertSQL(URL_OP,USER,PASSWORD);
-            //Vecteur.insertSQL(URL_OP,USER,PASSWORD);
-            //Materiel.insertSQL(URL_OP,USER,PASSWORD);
-            //Job.insertSQL(URL_OP,USER,PASSWORD);
-            //User.insertSQL(URL_OP,USER,PASSWORD);
-            //Skill.insertSQL(URL_OP, USER, PASSWORD);
+            
 
-            //Join_Skill_Job.insertSQL(URL_OP,USER,PASSWORD);
-            //Join_Staff_Job.insertSQL(URL_OP,USER,PASSWORD);
-            //Join_Skill_User.insertSQL(URL_OP,USER,PASSWORD);
-            //Join_SMUR_User.insertSQL(URL_OP,USER,PASSWORD);
+            TypeDAMU.insertSQL(URL_OP,USER,PASSWORD);
+            TypeMateriel.insertSQL(URL_OP,USER,PASSWORD);
+            TypeVecteur.insertSQL(URL_OP,USER,PASSWORD);
+            SAMU.insertSQL(URL_OP,USER,PASSWORD);
+            SMUR.insertSQL(URL_OP,USER,PASSWORD);
+            Vecteur.insertSQL(URL_OP,USER,PASSWORD);
+            Materiel.insertSQL(URL_OP,USER,PASSWORD);
+            Job.insertSQL(URL_OP,USER,PASSWORD);
+            User.insertSQL(URL_OP,USER,PASSWORD);
+            Skill.insertSQL(URL_OP, USER, PASSWORD);
+
+            Join_Skill_Job.insertSQL(URL_OP,USER,PASSWORD);
+            Join_Staff_Job.insertSQL(URL_OP,USER,PASSWORD);
+            Join_Skill_User.insertSQL(URL_OP,USER,PASSWORD);
+            Join_SMUR_User.insertSQL(URL_OP,USER,PASSWORD);
             Join_SAMU_User.insertSQL(URL_OP,USER,PASSWORD);
+          
+            Victime.insertSQL(URL_OP,USER,PASSWORD);
 
-            //Victime.insertSQL(URL_OP,USER,PASSWORD);
+            TeleMedicalisation.insertSQL(URL_OP,USER,PASSWORD);
+            Ambulance.insertSQL(URL_OP,USER,PASSWORD);
 
-            //TeleMedicalisation.insertSQL(URL_OP,USER,PASSWORD);
-            //Ambulance.insertSQL(URL_OP,USER,PASSWORD);
+            SDIS.insertSQL(URL_OP,USER,PASSWORD);
 
-            //SDIS.insertSQL(URL_OP,USER,PASSWORD);
-
-
+            PDS.insertSQL(URL_OP,USER,PASSWORD);
 
 
 

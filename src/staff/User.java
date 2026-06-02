@@ -132,10 +132,10 @@ public class User {
                 '}';
     }
 
-    public static List<User> generateAllFemaleUser(String passwordForAll, int nbUser) throws SQLException, IOException {
+    public static List<User> generateAllFemaleUser( int nbUser) throws SQLException, IOException {
 
         List<User> users = new ArrayList<>();
-        String cryptedPassword = Utils.chiffrementPassword(passwordForAll);
+        String cryptedPassword = Utils.chiffrementPassword();
         Random rand = new Random();
 
         FileInputStream file = new FileInputStream(new File("assets/GL_SQL_datas.xlsx"));
@@ -181,10 +181,10 @@ public class User {
         return users;
     }
 
-    public static List<User> generateAllMaleUser(String passwordForAll, int nbUser) throws SQLException, IOException {
+    public static List<User> generateAllMaleUser( int nbUser) throws SQLException, IOException {
 
         List<User> users = new ArrayList<>();
-        String cryptedPassword = Utils.chiffrementPassword(passwordForAll);
+        String cryptedPassword = Utils.chiffrementPassword();
         Random rand = new Random();
 
         FileInputStream file = new FileInputStream(new File("assets/GL_SQL_datas.xlsx"));
@@ -244,8 +244,8 @@ public class User {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
-        List<User>users_temp = generateAllFemaleUser("password",30);
-        users_temp.addAll(generateAllMaleUser("password",30));
+        List<User>users_temp = generateAllFemaleUser(30);
+        users_temp.addAll(generateAllMaleUser(30));
 
         List<User> users = User.rendreUniques(users_temp);
 
@@ -325,6 +325,78 @@ public class User {
 
                 User v = new User(false);
                 v.setRowid(id);
+                users.add(v);
+            }
+
+            return users;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static List<User> collectSQL_Regulator(String url,
+                                        String user,
+                                        String password) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+            List<User> users = new ArrayList<>();
+
+            Statement stat = null;
+
+            System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * \n" +
+                    "FROM llx_hrm_job\n" +
+                    "JOIN llx_hrm_job_user ON llx_hrm_job_user.fk_job = llx_hrm_job.rowid\n" +
+                    "JOIN llx_user ON llx_user.rowid = llx_hrm_job_user.fk_user\n" +
+                    "WHERE llx_hrm_job.label = 'Médecin régulateur'";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while (resultSQL.next()) {
+
+                int id = resultSQL.getInt("rowid");
+                String tel = resultSQL.getString("office_phone");
+
+                User v = new User(false);
+                v.setRowid(id);
+                v.setTel(tel);
+                users.add(v);
+            }
+
+            return users;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static List<User> collectSQL_Operator(String url,
+                                                  String user,
+                                                  String password) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+            List<User> users = new ArrayList<>();
+
+            Statement stat = null;
+
+            System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * \n" +
+                    "FROM llx_hrm_job\n" +
+                    "JOIN llx_hrm_job_user ON llx_hrm_job_user.fk_job = llx_hrm_job.rowid\n" +
+                    "JOIN llx_user ON llx_user.rowid = llx_hrm_job_user.fk_user\n" +
+                    "WHERE llx_hrm_job.label = 'Opérateur'";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while (resultSQL.next()) {
+
+                int id = resultSQL.getInt("rowid");
+                String tel = resultSQL.getString("office_phone");
+
+                User v = new User(false);
+                v.setRowid(id);
+                v.setTel(tel);
                 users.add(v);
             }
 
