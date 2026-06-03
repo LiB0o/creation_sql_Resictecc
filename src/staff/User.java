@@ -116,9 +116,14 @@ public class User {
         return rowid;
     }
 
+    public String getTel() {
+        return tel;
+    }
+
     @Override
     public String toString() {
         return "User{" +
+                "rowid=" + rowid +
                 "role_code=" + role_code +
                 ", bool_admin=" + bool_admin +
                 ", date_crea_compte=" + date_crea_compte +
@@ -338,12 +343,13 @@ public class User {
     public static List<User> collectSQL_Regulator(String url,
                                         String user,
                                         String password) throws SQLException {
+        List<User> users = new ArrayList<>();
+        //System.out.println("regulator : enter");
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            List<User> users = new ArrayList<>();
 
             Statement stat = null;
 
-            System.out.println("Connected to the DB");
+            //System.out.println("Connected to the DB");
 
             stat = conn.createStatement();
             String sql = "SELECT * \n" +
@@ -353,18 +359,23 @@ public class User {
                     "WHERE llx_hrm_job.label = 'Médecin régulateur'";
             ResultSet resultSQL = stat.executeQuery(sql);
 
+            //System.out.println("regulator : sql ok");
+
             while (resultSQL.next()) {
 
-                int id = resultSQL.getInt("rowid");
-                String tel = resultSQL.getString("office_phone");
+                //System.out.println("regulator : while");
+
+                int id = resultSQL.getInt("llx_user.rowid");
+                String tel = resultSQL.getString("llx_user.office_phone");
 
                 User v = new User(false);
                 v.setRowid(id);
                 v.setTel(tel);
                 users.add(v);
             }
-
+            //System.out.println("regulator : end");
             return users;
+
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -391,8 +402,8 @@ public class User {
 
             while (resultSQL.next()) {
 
-                int id = resultSQL.getInt("rowid");
-                String tel = resultSQL.getString("office_phone");
+                int id = resultSQL.getInt("llx_user.rowid");
+                String tel = resultSQL.getString("llx_user.office_phone");
 
                 User v = new User(false);
                 v.setRowid(id);
