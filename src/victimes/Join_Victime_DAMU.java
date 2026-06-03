@@ -1,5 +1,6 @@
 package victimes;
 
+import samu_intervention.DAMU;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,9 +12,11 @@ import java.util.Random;
 public class Join_Victime_DAMU {
     private int id_victime;
     private String id_damu;
+    private int id_type_damu;
 
     public Join_Victime_DAMU() {
         this.id_victime = -1;
+        this.id_type_damu = -1;
         this.id_damu = null;
     }
 
@@ -24,7 +27,8 @@ public class Join_Victime_DAMU {
             List<Victime> listVic = Victime.collectSQL(url, user, password);
 
             for (DAMU d : listDamu) {
-                String id = d.getIdDemande();
+                String id = d.getId();
+                int type = d.getId_type_BAMU();
 
                 Random rand = new Random();
                 int nbVic = rand.nextInt(4);
@@ -33,6 +37,7 @@ public class Join_Victime_DAMU {
                     Join_Victime_DAMU join = new Join_Victime_DAMU();
 
                     join.id_damu = id;
+                    join.id_type_damu = type;
                     join.id_victime = listVic.get(rand.nextInt(listVic.size())).getId();
 
                     listJoin.add(join);
@@ -52,11 +57,12 @@ public class Join_Victime_DAMU {
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
             for(Join_Victime_DAMU join : listJoin) {
-                String sql = "INSERT INTO `llx_resisteccsamusmur_concerner`(`id_victime`,`id_demande`)" +
-                            "VALUES (?,?)";
+                String sql = "INSERT INTO `llx_resisteccsamusmur_concerner`(`id_victime`,`id_type_BAMU`,`id_demande`)" +
+                            "VALUES (?,?,?)";
                 PreparedStatement p = conn.prepareStatement(sql);
                 p.setInt(1, join.id_victime);
-                p.setString(2, join.id_damu);
+                p.setInt(2, join.id_type_damu);
+                p.setString(3, join.id_damu);
                 p.executeUpdate();
             }
         } catch (Exception e) {
