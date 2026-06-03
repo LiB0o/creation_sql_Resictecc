@@ -1,5 +1,7 @@
 package victimes;
 
+import samu_intervention.DAMU;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -24,7 +26,7 @@ public class Join_Victime_DAMU {
             List<Victime> listVic = Victime.collectSQL(url, user, password);
 
             for (DAMU d : listDamu) {
-                String id = d.getIdDemande();
+                String id = d.getId();
 
                 Random rand = new Random();
                 int nbVic = rand.nextInt(4);

@@ -27,7 +27,7 @@ public class Main {
         try{
             
 
-            TypeDAMU.insertSQL(URL_OP,USER,PASSWORD);
+            /*TypeDAMU.insertSQL(URL_OP,USER,PASSWORD);
             TypeMateriel.insertSQL(URL_OP,USER,PASSWORD);
             TypeVecteur.insertSQL(URL_OP,USER,PASSWORD);
             SAMU.insertSQL(URL_OP,USER,PASSWORD);
@@ -52,7 +52,9 @@ public class Main {
             SDIS.insertSQL(URL_OP,USER,PASSWORD);
 
             PDS.insertSQL(URL_OP,USER,PASSWORD);
+            */
 
+            //DAMU.insertSQL(URL_OP,USER,PASSWORD);
 
 
 
