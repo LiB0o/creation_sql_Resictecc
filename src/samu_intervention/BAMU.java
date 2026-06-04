@@ -174,4 +174,35 @@ public class BAMU {
         }
     }
 
+    public static List<BAMU> collectSQL(String url,
+                                        String user,
+                                        String password) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+            List<BAMU> vecteurs = new ArrayList<>();
+
+            Statement stat = null;
+
+            System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * FROM llx_resisteccsamusmur_bamu";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while (resultSQL.next()) {
+
+                int id = resultSQL.getInt("id_intervention");
+
+                BAMU v = new BAMU();
+                v.setId_inter(id);
+
+                vecteurs.add(v);
+            }
+
+            return vecteurs;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
