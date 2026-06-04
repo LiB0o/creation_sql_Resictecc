@@ -55,11 +55,13 @@ public class Main {
 
 
             DAMU.insertSQL(URL_OP,USER,PASSWORD);
-            Join_Victime_DAMU.insertSQL(URL_OP,USER,PASSWORD);*/
+            Join_Victime_DAMU.insertSQL(URL_OP,USER,PASSWORD);
 
-            BAMU.insertSQL(URL_OP, USER, PASSWORD);
+            BAMU.insertSQL(URL_OP, USER, PASSWORD);*/
 
+            List<BAMU> bamus = Join_BAMU_All.insertSQL(URL_OP, USER, PASSWORD);
 
+            EnvoieSMUR.insertSQL(URL_OP, USER, PASSWORD, bamus);
 
             /*conn = DriverManager.getConnection(URL_OP,USER,PASSWORD);
             System.out.println("Connected to the DB");
