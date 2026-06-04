@@ -31,6 +31,11 @@ public class TypeDAMU {
         this.id = -1;
     }
 
+    public TypeDAMU(){
+        this.name = null;
+        this.id = -1;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -41,7 +46,7 @@ public class TypeDAMU {
 
     @Override
     public String toString() {
-        return "TypeLocalisation{" +
+        return "TypeDAMU{" +
                 "name='" + name + '\'' +
                 '}';
     }
@@ -132,8 +137,37 @@ public class TypeDAMU {
         return list_DAMU;
     }
 
-    /*public static void main(String[] args) throws IOException {
-        insertSQL();
-        System.out.println("insertSQL done");
-    }*/
+    public static TypeDAMU collectOne(String url, String user, String password, int id)throws IOException{
+        TypeDAMU t = new TypeDAMU();
+
+        try(Connection conn = DriverManager.getConnection(url, user, password)){
+            Statement stat = null;
+
+            System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * FROM llx_resisteccsamusmur_type_bamu WHERE id_type_BAMU ="+id;
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while (resultSQL.next()) {
+
+                int id_type_BAMU = resultSQL.getInt("id_type_BAMU");
+                String nom = resultSQL.getString("nom");
+
+                t.setName(nom);
+                t.setId(id_type_BAMU);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return t;
+    }
+
+    private void setName(String nom) {
+        this.name = nom;
+    }
+
+
 }

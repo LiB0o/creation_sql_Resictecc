@@ -52,9 +52,12 @@ public class Main {
             SDIS.insertSQL(URL_OP,USER,PASSWORD);
 
             PDS.insertSQL(URL_OP,USER,PASSWORD);
-            */
 
-            //DAMU.insertSQL(URL_OP,USER,PASSWORD);
+
+            DAMU.insertSQL(URL_OP,USER,PASSWORD);
+            Join_Victime_DAMU.insertSQL(URL_OP,USER,PASSWORD);*/
+
+            BAMU.insertSQL(URL_OP, USER, PASSWORD);
 
 
 

@@ -266,14 +266,58 @@ public class DAMU {
 
                 String id = resultSQL.getString("id_demande");
                 int typeBAMU = resultSQL.getInt("id_type_BAMU");
+                String status = resultSQL.getString("statut_damu");
+                String description = resultSQL.getString("description");
+                Date date = resultSQL.getDate("date_");
 
                 DAMU v = new DAMU();
                 v.setId_type_BAMU(typeBAMU);
                 v.setId(id);
+                v.setStatus(status);
+                v.setDescription(description);
+                v.setDate(date);
+
                 vecteurs.add(v);
             }
 
             return vecteurs;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static DAMU collectSQL_One_demand(String url,
+                                        String user,
+                                        String password, String idDAMU) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+            DAMU v = new DAMU();
+
+            Statement stat = null;
+
+            System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * FROM llx_resisteccsamusmur_damu WHERE id_demande = '"+idDAMU+"'";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while (resultSQL.next()) {
+
+                String id = resultSQL.getString("id_demande");
+                int typeBAMU = resultSQL.getInt("id_type_BAMU");
+                String status = resultSQL.getString("statut_damu");
+                String description = resultSQL.getString("description");
+                Date date = resultSQL.getDate("date_");
+
+
+                v.setId_type_BAMU(typeBAMU);
+                v.setId(id);
+                v.setStatus(status);
+                v.setDescription(description);
+                v.setDate(date);
+            }
+
+            return v;
 
         } catch (Exception e) {
             throw new RuntimeException(e);
