@@ -1,13 +1,11 @@
 package organisme_soin;
 
 import localisation.Localisation;
+import samu_intervention.BAMU;
 import utilitaire.Utils;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -131,5 +129,36 @@ public class PDS {
         }
     }
 
+
+    public static List<PDS> collectSQL(String url,
+                                        String user,
+                                        String password) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+            List<PDS> vecteurs = new ArrayList<>();
+
+            Statement stat = null;
+
+            System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * FROM llx_resisteccsamusmur_pds";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while (resultSQL.next()) {
+
+                String id = resultSQL.getString("id_PDS");
+
+                PDS v = new PDS();
+                v.id = id;
+
+                vecteurs.add(v);
+            }
+
+            return vecteurs;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

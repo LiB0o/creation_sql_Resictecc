@@ -11,10 +11,7 @@ import utilitaire.Utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -306,4 +303,34 @@ public class TeleMedicalisation {
     }
 
 
+    public static List<TeleMedicalisation> collectSQL(String url,
+                                       String user,
+                                       String password) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+            List<TeleMedicalisation> vecteurs = new ArrayList<>();
+
+            Statement stat = null;
+
+            System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * FROM llx_resisteccsamusmur_telemedicalisation";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while (resultSQL.next()) {
+
+                String id = resultSQL.getString("id_medecin");
+
+                TeleMedicalisation v = new TeleMedicalisation();
+                v.id = id;
+
+                vecteurs.add(v);
+            }
+
+            return vecteurs;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

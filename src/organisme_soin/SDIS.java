@@ -4,10 +4,7 @@ import localisation.Localisation;
 import utilitaire.Utils;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -116,6 +113,37 @@ public class SDIS {
         }
         catch(SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static List<SDIS> collectSQL(String url,
+                                       String user,
+                                       String password) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+            List<SDIS> vecteurs = new ArrayList<>();
+
+            Statement stat = null;
+
+            System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * FROM llx_resisteccsamusmur_sdis";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while (resultSQL.next()) {
+
+                String id = resultSQL.getString("id_SDIS");
+
+                SDIS v = new SDIS();
+                v.id = id;
+
+                vecteurs.add(v);
+            }
+
+            return vecteurs;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
