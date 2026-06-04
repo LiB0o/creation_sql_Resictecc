@@ -4,10 +4,7 @@ import localisation.Localisation;
 import utilitaire.Utils;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -35,6 +32,14 @@ public class Ambulance {
         this.tel = null;
         this.nbAmbulance = 0;
         this.adresse = null;
+    }
+
+    public Ambulance(String id, String nom, String tel, int nbAmb, String ad) {
+        this.id = id;
+        this.nom = nom;
+        this.tel = tel;
+        this.nbAmbulance = nbAmb;
+        this.adresse = ad;
     }
 
     public void setTel(String tel) {
@@ -154,6 +159,36 @@ public class Ambulance {
         }
         catch(SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static List<Ambulance> collectSQL(String url, String user, String password) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            List<Ambulance> listAmb = new ArrayList<>();
+
+            Statement stat = null;
+            System.out.println("Connected to the DB");
+            stat = conn.createStatement();
+
+            String sql = "SELECT * FROM llx_resisteccsamusmur_ambulances";
+            ResultSet res = stat.executeQuery(sql);
+
+            while (res.next()) {
+                String id = res.getString("id_Ambulance");
+                String nom = res.getString("nom_ambulance");
+                String tel = res.getString("tel_ambulance");
+                int dispo = res.getInt("ambulance_dispo");
+                String adresse = res.getString("adresse");
+
+                Ambulance ambulance = new Ambulance(id,nom,tel,dispo,adresse);
+
+                listAmb.add(ambulance);
+            }
+
+            return listAmb;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
