@@ -103,17 +103,19 @@ public class Join_BAMU_All {
         }
     }
 
-    public static void insertSQL(String url, String user, String password) throws SQLException {
+    public static List<BAMU> insertSQL(String url, String user, String password) throws SQLException {
         List<Join_BAMU_All> listJoin = Join_BAMU_All.generateAllJoin(url, user, password);
+        List<BAMU> listBamuLeft = new ArrayList<>();
+        List<BAMU> listBAMU = BAMU.collectSQL(url, user, password);
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            for(Join_BAMU_All join : listJoin) {
+            for (Join_BAMU_All join : listJoin) {
 
                 String type = join.id_ambulance != null ? "ambulance"
-                        : join.id_pds       != null ? "pds"
-                        : join.id_sdis      != null ? "sdis"
-                        : join.id_telmed    != null ? "telmed"
-                        : null;
+                        : join.id_pds != null ? "pds"
+                          : join.id_sdis != null ? "sdis"
+                            : join.id_telmed != null ? "telmed"
+                              : null;
 
                 if (type == null) continue;
 
@@ -123,21 +125,24 @@ public class Join_BAMU_All {
                 switch (type) {
                     case "ambulance" -> {
                         sql = "INSERT INTO llx_resisteccsamusmur_envoyer_ambulance(id_intervention, id_Ambulance) VALUES (?, ?)";
-                        id  = join.id_ambulance;
+                        id = join.id_ambulance;
                     }
                     case "pds" -> {
                         sql = "INSERT INTO llx_resisteccsamusmur_envoyer_pds(id_intervention, id_PDS) VALUES (?, ?)";
-                        id  = join.id_pds;
+                        id = join.id_pds;
                     }
                     case "sdis" -> {
                         sql = "INSERT INTO llx_resisteccsamusmur_envoyer_sdis(id_intervention, id_SDIS) VALUES (?, ?)";
-                        id  = join.id_sdis;
+                        id = join.id_sdis;
                     }
                     case "telmed" -> {
                         sql = "INSERT INTO llx_resisteccsamusmur_envoyer_telemedicalisation(id_intervention, id_medecin) VALUES (?, ?)";
-                        id  = join.id_telmed;
+                        id = join.id_telmed;
                     }
-                    default -> { continue; }
+                    default -> {
+                        listBamuLeft.add(listBAMU.get(join.id_bamu));
+                        continue;
+                    }
                 }
 
                 try (PreparedStatement p = conn.prepareStatement(sql)) {
@@ -149,25 +154,8 @@ public class Join_BAMU_All {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return listBamuLeft;
     }
 
-
-    public static List<BAMU> collectBAMULeft(String url, String user, String password) {
-        List<Join_BAMU_All> listJoin = Join_BAMU_All.generateAllJoin(url, user, password);
-        List<BAMU> listBAMU = BAMU.collectSQL(url,user,password);
-        List<BAMU> listBAMULeft = new ArrayList<>();
-
-        for (Join_BAMU_All join : listJoin) {
-            boolean isLeft = join.id_ambulance == null
-                    && join.id_pds       == null
-                    && join.id_sdis      == null
-                    && join.id_telmed    == null;
-
-            if (isLeft) {
-                listBAMULeft.add(listBAMU.get(join.id_bamu));
-            }
-        }
-
-        return listBAMULeft;
-    }
 }
