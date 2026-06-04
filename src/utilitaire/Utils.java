@@ -1,6 +1,7 @@
 package utilitaire;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Random;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -22,6 +23,10 @@ public class Utils {
 
     public static LocalDate addDays(LocalDate date, int days) {
         return date.plusDays(days);
+    }
+
+    public static LocalTime addTime(LocalTime time, int minutes) {
+        return time.plusMinutes(minutes);
     }
 
     /*public static void main(String[] args) {
