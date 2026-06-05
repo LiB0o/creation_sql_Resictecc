@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Random;
 
 public class Join_SAMU_User {
-    private int id_samu;
+    private String id_samu;
     private int id_user;
     private Date date_emploi;
 
     public Join_SAMU_User() {
-        this.id_samu = -1;
+        this.id_samu = null;
         this.id_user = -1;
         this.date_emploi = null;
     }
@@ -20,7 +20,7 @@ public class Join_SAMU_User {
     public static List<Join_SAMU_User> generateAllJoin(String url, String user, String password) {
         try {
             List<Join_SAMU_User> listJoin = new ArrayList<>();
-            List<SMUR> listSamu = SMUR.collectSQL(url, user, password);
+            List<SAMU> listSamu = SAMU.collectSQL(url, user, password);
             List<User> listUser = User.collectSQL(url, user, password);
             LocalDate localDate = LocalDate.now();
             int nbSmur = listSamu.size();
@@ -28,7 +28,7 @@ public class Join_SAMU_User {
 
             for(User u : listUser) {
                 int us = u.getRowid();
-                int smur = listSamu.get(rand.nextInt(nbSmur)).getId();
+                String smur = listSamu.get(rand.nextInt(nbSmur)).getId();
                 if(!Join_Staff_Job.hasSMURJob(url, user, password, u.getRowid()) && !Join_Staff_Job.isCESUStaff(url, user, password, u.getRowid())) {
                     Join_SAMU_User join = new Join_SAMU_User();
                     join.id_user = us;
@@ -58,7 +58,7 @@ public class Join_SAMU_User {
                         "VALUES (?,?,?)";
                 PreparedStatement p = conn.prepareStatement(sql);
                 p.setInt(1,j.id_user);
-                p.setInt(2,j.id_samu);
+                p.setString(2,j.id_samu);
                 p.setDate(3,j.date_emploi);
                 p.executeUpdate();
             }

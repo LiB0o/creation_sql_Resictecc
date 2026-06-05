@@ -8,10 +8,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -102,7 +99,6 @@ public class SAMU {
                                  String password) throws IOException {
         List<SAMU> listSAMU = generateAllSAMU();
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(SAMU s : listSAMU){
                 String sql = "INSERT INTO `llx_resisteccsamusmur_samu`(`id_SAMU`,`nom`) " +
@@ -115,6 +111,34 @@ public class SAMU {
         }
         catch(SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public static List<SAMU> collectSQL(String url,
+                                        String user,
+                                        String password) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+            List<SAMU> smurs = new ArrayList<>();
+
+            Statement stat = null;
+
+            stat = conn.createStatement();
+            String sql = "SELECT * FROM llx_resisteccsamusmur_samu";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while (resultSQL.next()) {
+                String id = resultSQL.getString("id_SAMU");
+                String nom = resultSQL.getString("nom");
+
+                SAMU v = new SAMU(id,nom);
+                smurs.add(v);
+            }
+
+            return smurs;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

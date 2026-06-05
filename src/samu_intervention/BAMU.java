@@ -182,8 +182,6 @@ public class BAMU {
 
             Statement stat = null;
 
-            System.out.println("Connected to the DB");
-
             stat = conn.createStatement();
             String sql = "SELECT * FROM llx_resisteccsamusmur_bamu";
             ResultSet resultSQL = stat.executeQuery(sql);
@@ -196,6 +194,33 @@ public class BAMU {
                 v.setId_inter(id);
 
                 vecteurs.add(v);
+            }
+
+            return vecteurs;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static BAMU collectSQLOne(String url,
+                                        String user,
+                                        String password, int id) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+            BAMU vecteurs = new BAMU();
+
+            Statement stat = null;
+
+            stat = conn.createStatement();
+            String sql = "SELECT * FROM llx_resisteccsamusmur_bamu WHERE id_intervention ="+id;
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while (resultSQL.next()) {
+
+                int idSAMU = resultSQL.getInt("id_intervention");
+
+                vecteurs.setId_inter(idSAMU);
+
             }
 
             return vecteurs;
