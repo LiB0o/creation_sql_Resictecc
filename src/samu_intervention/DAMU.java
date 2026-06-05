@@ -179,7 +179,14 @@ public class DAMU {
 
             int pos_regulator = rand.nextInt(users_regulators.size());
             damu.setId_staff_regulateur(users_regulators.get(pos_regulator).getRowid());
-            damu.setTel(users_regulators.get(pos_regulator).getTel());
+
+            String tel = users_regulators.get(pos_regulator).getTel();
+            if(tel == null){
+                damu.setTel("00");
+            }
+            else{
+                damu.setTel(tel);
+            }
 
             int pos_operator = rand.nextInt(users_premier_contact.size());
             damu.setId_staff_demandeur(users_premier_contact.get(pos_operator).getRowid());

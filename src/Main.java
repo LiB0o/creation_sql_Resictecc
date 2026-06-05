@@ -15,17 +15,27 @@ import utilitaire.*;
 
 public class Main {
 
-    private static final String URL_OP = "jdbc:mysql://localhost:3306/dolibarr_op";
-    private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static String URL_OP = "jdbc:mysql://localhost:3306/dolibarr_op";
+    private static String USER = "root";
+    private static String PASSWORD = "";
 
 
     public static void main(String[] args) {
         Connection conn = null;
         Statement stat = null;
 
-        try{
-            
+        if(args.length < 3){
+            System.out.println("Erreur, le nombre d'argument n'est pas suffisant. Attendu:" +
+                    "[Url compléte de la base de donnée] [login administrator] [mot de passe administrator]");
+        }
+        else{
+
+            URL_OP = args[0];
+            USER = args[1];
+            PASSWORD = args[2];
+
+            try{
+
 
             /*TypeDAMU.insertSQL(URL_OP,USER,PASSWORD);
             TypeMateriel.insertSQL(URL_OP,USER,PASSWORD);
@@ -43,7 +53,7 @@ public class Main {
             Join_Skill_User.insertSQL(URL_OP,USER,PASSWORD);
             Join_SMUR_User.insertSQL(URL_OP,USER,PASSWORD);
             Join_SAMU_User.insertSQL(URL_OP,USER,PASSWORD);
-          
+
             Victime.insertSQL(URL_OP,USER,PASSWORD);
 
             TeleMedicalisation.insertSQL(URL_OP,USER,PASSWORD);
@@ -59,25 +69,15 @@ public class Main {
 
             BAMU.insertSQL(URL_OP, USER, PASSWORD);*/
 
-            List<BAMU> bamus = Join_BAMU_All.insertSQL(URL_OP, USER, PASSWORD);
+                List<BAMU> bamus = Join_BAMU_All.insertSQL(URL_OP, USER, PASSWORD);
 
-            EnvoieSMUR.insertSQL(URL_OP, USER, PASSWORD, bamus);
+                EnvoieSMUR.insertSQL(URL_OP, USER, PASSWORD, bamus);
 
-            /*conn = DriverManager.getConnection(URL_OP,USER,PASSWORD);
-            System.out.println("Connected to the DB");
-
-            stat = conn.createStatement();
-            String sql = "SELECT * FROM llx_user";
-            ResultSet resultSQL = stat.executeQuery(sql);
-
-            while(resultSQL.next()){
-                int id = resultSQL.getInt("rowid");
-                int entity = resultSQL.getInt("entity");
-                System.out.println("ID de user:"+id+" - "+entity+"\n");
-            }*/
-
-        }catch(Exception e){
-            e.printStackTrace();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
+
+
     }
 }
