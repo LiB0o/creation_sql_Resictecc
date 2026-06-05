@@ -4,19 +4,14 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import utilitaire.Utils;
-import vecteur_et_details.TypeVecteur;
-import vecteur_et_details.Vecteur;
+
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.time.LocalDate;
+import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 public class User {
 
@@ -37,6 +32,7 @@ public class User {
     private static  final String TABLENAME = "llx_user";
     private final static String PASSWORD = "password";
 
+    private int rowid;
     private int role_code;
     private int bool_admin; // 0 or 1
     private Date date_crea_compte;
@@ -60,11 +56,16 @@ public class User {
             this.bool_admin = 0;
         }
 
+        this.rowid = -1;
         this.login = null;
         this.password = null;
         this.lastname = null;
         this.firstname = null;
 
+    }
+
+    public void setRowid(int rowid) {
+        this.rowid = rowid;
     }
 
     public void setAdresse(String adresse) {
@@ -111,10 +112,18 @@ public class User {
         this.password = password;
     }
 
+    public int getRowid() {
+        return rowid;
+    }
+
+    public String getTel() {
+        return tel;
+    }
 
     @Override
     public String toString() {
         return "User{" +
+                "rowid=" + rowid +
                 "role_code=" + role_code +
                 ", bool_admin=" + bool_admin +
                 ", date_crea_compte=" + date_crea_compte +
@@ -128,10 +137,10 @@ public class User {
                 '}';
     }
 
-    public static List<User> generateAllFemaleUser(String passwordForAll, int nbUser) throws SQLException, IOException {
+    public static List<User> generateAllFemaleUser( int nbUser) throws SQLException, IOException {
 
         List<User> users = new ArrayList<>();
-        String cryptedPassword = Utils.chiffrementPassword(passwordForAll);
+        String cryptedPassword = Utils.chiffrementPassword();
         Random rand = new Random();
 
         FileInputStream file = new FileInputStream(new File("assets/GL_SQL_datas.xlsx"));
@@ -177,10 +186,10 @@ public class User {
         return users;
     }
 
-    public static List<User> generateAllMaleUser(String passwordForAll, int nbUser) throws SQLException, IOException {
+    public static List<User> generateAllMaleUser( int nbUser) throws SQLException, IOException {
 
         List<User> users = new ArrayList<>();
-        String cryptedPassword = Utils.chiffrementPassword(passwordForAll);
+        String cryptedPassword = Utils.chiffrementPassword();
         Random rand = new Random();
 
         FileInputStream file = new FileInputStream(new File("assets/GL_SQL_datas.xlsx"));
@@ -240,14 +249,12 @@ public class User {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
-        Connection conn = null;
-        List<User>users_temp = generateAllFemaleUser("password",30);
-        users_temp.addAll(generateAllMaleUser("password",30));
+        List<User>users_temp = generateAllFemaleUser(30);
+        users_temp.addAll(generateAllMaleUser(30));
 
         List<User> users = User.rendreUniques(users_temp);
 
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(User u : users){
@@ -300,4 +307,241 @@ public class User {
 
         return resultat;
     }
+
+    public static List<User> collectSQL(String url,
+                                       String user,
+                                       String password) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+            List<User> users = new ArrayList<>();
+
+            Statement stat = null;
+
+            System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * FROM llx_user";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while (resultSQL.next()) {
+
+                int id = resultSQL.getInt("rowid");
+                //java.sql.Date date_aquis = resultSQL.getDate("date_creation");
+                //String label = resultSQL.getString("label");
+
+                User v = new User(false);
+                v.setRowid(id);
+                users.add(v);
+            }
+
+            return users;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static List<User> collectSQL_Regulator(String url,
+                                        String user,
+                                        String password) throws SQLException {
+        List<User> users = new ArrayList<>();
+        //System.out.println("regulator : enter");
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+
+            Statement stat = null;
+
+            //System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * \n" +
+                    "FROM llx_hrm_job\n" +
+                    "JOIN llx_hrm_job_user ON llx_hrm_job_user.fk_job = llx_hrm_job.rowid\n" +
+                    "JOIN llx_user ON llx_user.rowid = llx_hrm_job_user.fk_user\n" +
+                    "WHERE llx_hrm_job.label = 'Médecin régulateur'";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            //System.out.println("regulator : sql ok");
+
+            while (resultSQL.next()) {
+
+                //System.out.println("regulator : while");
+
+                int id = resultSQL.getInt("llx_user.rowid");
+                String tel = resultSQL.getString("llx_user.office_phone");
+
+                User v = new User(false);
+                v.setRowid(id);
+                v.setTel(tel);
+                users.add(v);
+            }
+            //System.out.println("regulator : end");
+            return users;
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static List<User> collectSQL_Operator(String url,
+                                                  String user,
+                                                  String password) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+            List<User> users = new ArrayList<>();
+
+            Statement stat = null;
+
+            System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * \n" +
+                    "FROM llx_hrm_job\n" +
+                    "JOIN llx_hrm_job_user ON llx_hrm_job_user.fk_job = llx_hrm_job.rowid\n" +
+                    "JOIN llx_user ON llx_user.rowid = llx_hrm_job_user.fk_user\n" +
+                    "WHERE llx_hrm_job.label = 'Opérateur'";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while (resultSQL.next()) {
+
+                int id = resultSQL.getInt("llx_user.rowid");
+                String tel = resultSQL.getString("llx_user.office_phone");
+
+                User v = new User(false);
+                v.setRowid(id);
+                v.setTel(tel);
+                users.add(v);
+            }
+
+            return users;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static List<User> collectSQL_Infirmier(String url,
+                                                  String user,
+                                                  String password) throws SQLException {
+        List<User> users = new ArrayList<>();
+        //System.out.println("regulator : enter");
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+
+            Statement stat = null;
+
+            //System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * \n" +
+                    "FROM llx_hrm_job\n" +
+                    "JOIN llx_hrm_job_user ON llx_hrm_job_user.fk_job = llx_hrm_job.rowid\n" +
+                    "JOIN llx_user ON llx_user.rowid = llx_hrm_job_user.fk_user\n" +
+                    "WHERE llx_hrm_job.label = 'Infirmier'";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            //System.out.println("regulator : sql ok");
+
+            while (resultSQL.next()) {
+
+                //System.out.println("regulator : while");
+
+                int id = resultSQL.getInt("llx_user.rowid");
+                String tel = resultSQL.getString("llx_user.office_phone");
+
+                User v = new User(false);
+                v.setRowid(id);
+                v.setTel(tel);
+                users.add(v);
+            }
+            //System.out.println("regulator : end");
+            return users;
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static List<User> collectSQL_Ambulancier(String url,
+                                                  String user,
+                                                  String password) throws SQLException {
+        List<User> users = new ArrayList<>();
+        //System.out.println("regulator : enter");
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+
+            Statement stat = null;
+
+            //System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * \n" +
+                    "FROM llx_hrm_job\n" +
+                    "JOIN llx_hrm_job_user ON llx_hrm_job_user.fk_job = llx_hrm_job.rowid\n" +
+                    "JOIN llx_user ON llx_user.rowid = llx_hrm_job_user.fk_user\n" +
+                    "WHERE llx_hrm_job.label = 'Ambulancier'";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            //System.out.println("regulator : sql ok");
+
+            while (resultSQL.next()) {
+
+                //System.out.println("regulator : while");
+
+                int id = resultSQL.getInt("llx_user.rowid");
+                String tel = resultSQL.getString("llx_user.office_phone");
+
+                User v = new User(false);
+                v.setRowid(id);
+                v.setTel(tel);
+                users.add(v);
+            }
+            //System.out.println("regulator : end");
+            return users;
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static List<User> collectSQL_Med(String url,
+                                                    String user,
+                                                    String password) throws SQLException {
+        List<User> users = new ArrayList<>();
+        //System.out.println("regulator : enter");
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+
+            Statement stat = null;
+
+            //System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * \n" +
+                    "FROM llx_hrm_job\n" +
+                    "JOIN llx_hrm_job_user ON llx_hrm_job_user.fk_job = llx_hrm_job.rowid\n" +
+                    "JOIN llx_user ON llx_user.rowid = llx_hrm_job_user.fk_user\n" +
+                    "WHERE llx_hrm_job.label = 'Médecin'";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            //System.out.println("regulator : sql ok");
+
+            while (resultSQL.next()) {
+
+                //System.out.println("regulator : while");
+
+                int id = resultSQL.getInt("llx_user.rowid");
+                String tel = resultSQL.getString("llx_user.office_phone");
+
+                User v = new User(false);
+                v.setRowid(id);
+                v.setTel(tel);
+                users.add(v);
+            }
+            //System.out.println("regulator : end");
+            return users;
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

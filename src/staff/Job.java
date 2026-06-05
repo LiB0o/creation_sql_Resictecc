@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import vecteur_et_details.Vecteur;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +21,7 @@ import java.util.List;
 public class Job {
     private static final String TABLENAME = "llx_hrm_job";
 
+    private int id;
     private String name;
     private Date dateCrea;
 
@@ -29,11 +31,13 @@ public class Job {
     public Date getDateCrea(){return dateCrea;}
 
     public Job(){
+        this.id = -1;
         this.name = null;
         this.dateCrea = null;
     }
 
-    public Job(String nom, Date date){
+    public Job(String nom, Date date, int id){
+        this.id = id;
         this.name = nom;
         this.dateCrea = date;
     }
@@ -44,6 +48,10 @@ public class Job {
                 "name='" + name + '\'' +
                 ", dateCrea=" + dateCrea +
                 '}';
+    }
+
+    public int getId() {
+        return id;
     }
 
     public static List<Job> generateAllJob() throws IOException {
@@ -89,10 +97,8 @@ public class Job {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
-        Connection conn = null;
         List<Job> listJobs = generateAllJob();
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(Job j : listJobs){
@@ -109,6 +115,37 @@ public class Job {
         }
         catch(SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static List<Job> collectSQL(String url,
+                                           String user,
+                                           String password) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
+            List<Job> jobs = new ArrayList<>();
+
+            Statement stat = null;
+
+            System.out.println("Connected to the DB");
+
+            stat = conn.createStatement();
+            String sql = "SELECT * FROM llx_hrm_job";
+            ResultSet resultSQL = stat.executeQuery(sql);
+
+            while (resultSQL.next()) {
+
+                int id = resultSQL.getInt("rowid");
+                Date date_aquis = resultSQL.getDate("date_creation");
+                String label = resultSQL.getString("label");
+
+                Job v = new Job(label,date_aquis,id);
+                jobs.add(v);
+            }
+
+            return jobs;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

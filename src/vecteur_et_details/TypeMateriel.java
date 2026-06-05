@@ -96,10 +96,8 @@ public class TypeMateriel {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException {
-        Connection conn = null;
         List<TypeMateriel> listTypeMateriel = generateAllTypeMateriel();
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(TypeMateriel t : listTypeMateriel){
@@ -118,13 +116,11 @@ public class TypeMateriel {
     public static List<TypeMateriel> collectSQL(String url,
                                                String user,
                                                String password) throws SQLException {
-        try {
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             List<TypeMateriel> typeMateriels = new ArrayList<>();
 
-            Connection conn = null;
             Statement stat = null;
 
-            conn = DriverManager.getConnection(url, user, password);
             System.out.println("Connected to the DB");
 
             stat = conn.createStatement();

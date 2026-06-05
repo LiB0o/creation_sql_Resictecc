@@ -138,6 +138,36 @@ public class Materiel {
                         }
                     }
                 }
+
+                Random rand = new Random();
+                int nb_material = rand.nextInt(15);
+                for(int i = 0; i<nb_material; i++){
+
+                    if(row.getRowNum()>0){
+                        // Iterating over each column in a row
+                        Materiel mat= new Materiel();
+                        Iterator<Cell> cellIterator = row.cellIterator();
+
+                        while (cellIterator.hasNext()) {
+                            Cell cell = cellIterator.next();
+                            switch (cell.getColumnIndex()) {
+                                case 0:
+                                    mat.nom = cell.getStringCellValue();
+                                    break;
+                                case 1:
+                                    mat.id_type_materiel = Materiel.getIdTypeMaterial(typeMateriels,cell.getStringCellValue());
+                                    break;
+                            }
+                        }
+                        //mat.immatriculation_vehicule_associe = v.getImmatriculation();
+                        LocalDate localDate = LocalDate.now();
+                        mat.date_peremption = java.sql.Date.valueOf(Utils.addDays(localDate, rand.nextInt(120)));
+
+
+                        materiels.add(mat);
+                    }
+                }
+
             }
             // Closing the workbook to free resources
             wb.close();
@@ -161,10 +191,8 @@ public class Materiel {
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException {
-        Connection conn = null;
         List<Materiel> listMateriel = generateAllMateriel(url,user,password);
-        try{
-            conn = DriverManager.getConnection(url,user,password);
+        try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 
             for(Materiel m : listMateriel){
