@@ -30,7 +30,7 @@ public class Main {
         }
         else{
 
-            URL_OP = args[0];
+            URL_OP = "jdbc:mysql://"+args[0];
             USER = args[1];
             if(args.length >= 3){
                 PASSWORD = args[2];
