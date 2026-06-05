@@ -63,6 +63,8 @@ public class Main {
 
             EnvoieSMUR.insertSQL(URL_OP, USER, PASSWORD, bamus);
 
+
+
             /*conn = DriverManager.getConnection(URL_OP,USER,PASSWORD);
             System.out.println("Connected to the DB");
 
