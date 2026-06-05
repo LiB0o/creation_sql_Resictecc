@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class Join_BAMU_All {
@@ -27,6 +28,55 @@ public class Join_BAMU_All {
         this.id_telmed = null;
         this.id_pds = null;
     }
+
+    private static String uniqueIdAmbulance(List<String> idsVictimes, List<Ambulance> list, String idVic, int range) {
+
+        for(String ids : idsVictimes){
+            if(Objects.equals(ids, idVic)){
+                Random rand = new Random();
+                idVic = uniqueIdAmbulance(idsVictimes,list,list.get(rand.nextInt(range)).getId() ,range);
+            }
+        }
+
+        return idVic;
+    }
+
+    private static String uniqueIdPDS(List<String> idsVictimes, List<PDS> list, String idVic, int range) {
+
+        for(String ids : idsVictimes){
+            if(Objects.equals(ids, idVic)){
+                Random rand = new Random();
+                idVic = uniqueIdPDS(idsVictimes,list,list.get(rand.nextInt(range)).getId() ,range);
+            }
+        }
+
+        return idVic;
+    }
+
+    private static String uniqueIdSDIS(List<String> idsVictimes, List<SDIS> list, String idVic, int range) {
+
+        for(String ids : idsVictimes){
+            if(Objects.equals(ids, idVic)){
+                Random rand = new Random();
+                idVic = uniqueIdSDIS(idsVictimes,list,list.get(rand.nextInt(range)).getId() ,range);
+            }
+        }
+
+        return idVic;
+    }
+
+    private static String uniqueIdTEL(List<String> idsVictimes, List<TeleMedicalisation> list, String idVic, int range) {
+
+        for(String ids : idsVictimes){
+            if(Objects.equals(ids, idVic)){
+                Random rand = new Random();
+                idVic = uniqueIdTEL(idsVictimes,list,list.get(rand.nextInt(range)).getId() ,range);
+            }
+        }
+
+        return idVic;
+    }
+
 
     public static List<Join_BAMU_All> generateAllJoin(String url, String user, String password) {
         try {
@@ -47,41 +97,59 @@ public class Join_BAMU_All {
                 int id = listBAMU.get(total).getId_inter();
                 int nb = rand.nextInt(4);
 
-                if(total < nbBAMU/5) {
+                if(total %5 == 0) {
+                    List<String> ids = new ArrayList<String>();
 
                     for(int i = 0; i < nb; i++) {
                         Join_BAMU_All join = new Join_BAMU_All();
 
                         join.id_bamu = id;
-                        join.id_ambulance = listAmbulance.get(rand.nextInt(listAmbulance.size())).getId();
+                        String idAmbu = listAmbulance.get(rand.nextInt(listAmbulance.size())).getId();
+                        idAmbu = uniqueIdAmbulance(ids, listAmbulance, idAmbu, listAmbulance.size());
+                        ids.add(idAmbu);
+                        join.id_ambulance = idAmbu;
 
                         listJoin.add(join);
                     }
-                } else if (total < (nbBAMU/5)*2) {
-
+                }
+                else if (total %5 == 1) {
+                    List<String> ids = new ArrayList<String>();
                     for(int i = 0; i < nb; i++) {
                         Join_BAMU_All join = new Join_BAMU_All();
 
                         join.id_bamu = id;
-                        join.id_pds = listPDS.get(rand.nextInt(listPDS.size())).getId();
+                        String idPDS = listPDS.get(rand.nextInt(listPDS.size())).getId();
+                        idPDS = uniqueIdPDS(ids, listPDS, idPDS, listPDS.size());
+                        ids.add(idPDS);
+                        join.id_pds = idPDS;
 
                         listJoin.add(join);
                     }
-                } else if (total < (nbBAMU/5)*3) {
+                }
+                else if (total %5 == 2) {
+                    List<String> ids = new ArrayList<String>();
                     for(int i = 0; i < nb; i++) {
                         Join_BAMU_All join = new Join_BAMU_All();
 
                         join.id_bamu = id;
-                        join.id_sdis = listSDIS.get(rand.nextInt(listSDIS.size())).getId();
+                        String idSDIS = listSDIS.get(rand.nextInt(listSDIS.size())).getId();
+                        idSDIS = uniqueIdSDIS(ids, listSDIS, idSDIS, listSDIS.size());
+                        ids.add(idSDIS);
+                        join.id_sdis = idSDIS;
 
                         listJoin.add(join);
                     }
-                } else if (total < nbBAMU - (nbBAMU/5)) {
+                }
+                else if (total %5 == 3) {
+                    List<String> ids = new ArrayList<String>();
                     for(int i = 0; i < nb; i++) {
                         Join_BAMU_All join = new Join_BAMU_All();
 
                         join.id_bamu = id;
-                        join.id_telmed = listTelMed.get(rand.nextInt(listTelMed.size())).getId();
+                        String idTEL = listTelMed.get(rand.nextInt(listTelMed.size())).getId();
+                        idTEL = uniqueIdTEL(ids, listTelMed, idTEL, listTelMed.size());
+                        ids.add(idTEL);
+                        join.id_telmed = idTEL;
 
                         listJoin.add(join);
                     }
@@ -117,7 +185,6 @@ public class Join_BAMU_All {
                             : join.id_telmed != null ? "telmed"
                               : null;
 
-                if (type == null) continue;
 
                 String sql;
                 String id;
@@ -139,8 +206,11 @@ public class Join_BAMU_All {
                         sql = "INSERT INTO llx_resisteccsamusmur_envoyer_telemedicalisation(id_intervention, id_medecin) VALUES (?, ?)";
                         id = join.id_telmed;
                     }
+                    case null -> {
+                        listBamuLeft.add(BAMU.collectSQLOne(url, user, password, join.id_bamu));
+                        continue;
+                    }
                     default -> {
-                        listBamuLeft.add(listBAMU.get(join.id_bamu));
                         continue;
                     }
                 }

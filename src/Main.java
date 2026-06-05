@@ -24,20 +24,26 @@ public class Main {
         Connection conn = null;
         Statement stat = null;
 
-        if(args.length < 3){
+        if(args.length < 2){
             System.out.println("Erreur, le nombre d'argument n'est pas suffisant. Attendu:" +
-                    "[Url compléte de la base de donnée] [login administrator] [mot de passe administrator]");
+                    "[Url compléte de la base de donnée] [login administrator] [mot de passe administrator si il n'est pas vide]");
         }
         else{
 
             URL_OP = args[0];
             USER = args[1];
-            PASSWORD = args[2];
+            if(args.length >= 3){
+                PASSWORD = args[2];
+            }
+            else{
+                PASSWORD = "";
+            }
+
 
             try{
 
 
-            /*TypeDAMU.insertSQL(URL_OP,USER,PASSWORD);
+            TypeDAMU.insertSQL(URL_OP,USER,PASSWORD);
             TypeMateriel.insertSQL(URL_OP,USER,PASSWORD);
             TypeVecteur.insertSQL(URL_OP,USER,PASSWORD);
             SAMU.insertSQL(URL_OP,USER,PASSWORD);
@@ -67,11 +73,15 @@ public class Main {
             DAMU.insertSQL(URL_OP,USER,PASSWORD);
             Join_Victime_DAMU.insertSQL(URL_OP,USER,PASSWORD);
 
-            BAMU.insertSQL(URL_OP, USER, PASSWORD);*/
+            BAMU.insertSQL(URL_OP, USER, PASSWORD);
 
-                List<BAMU> bamus = Join_BAMU_All.insertSQL(URL_OP, USER, PASSWORD);
+            List<BAMU> bamus = Join_BAMU_All.insertSQL(URL_OP, USER, PASSWORD);
 
-                EnvoieSMUR.insertSQL(URL_OP, USER, PASSWORD, bamus);
+            for(BAMU b : bamus){
+                System.out.println(b.toString());
+            }
+
+            EnvoieSMUR.insertSQL(URL_OP, USER, PASSWORD, bamus);
 
             }catch(Exception e){
                 e.printStackTrace();
