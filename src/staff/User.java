@@ -316,7 +316,7 @@ public class User {
             Statement stat = null;
 
             stat = conn.createStatement();
-            String sql = "SELECT * FROM llx_user";
+            String sql = "SELECT * FROM llx_user WHERE rowid > 15000";
             ResultSet resultSQL = stat.executeQuery(sql);
 
             while (resultSQL.next()) {
