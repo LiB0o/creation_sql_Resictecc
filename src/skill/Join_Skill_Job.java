@@ -39,7 +39,7 @@ public class Join_Skill_Job {
                 '}';
     }
 
-    public static List<Join_Skill_Job> generateAllJoin(String url, String user, String password) throws IOException {
+    public static List<Join_Skill_Job> generateAllJoin(String url, String user, String password, LocalDate date) throws IOException {
         try {
             List<Join_Skill_Job> listJoin = new ArrayList<>();
 
@@ -75,7 +75,7 @@ public class Join_Skill_Job {
                                         .ifPresent(s -> join.id_job = s.getId());
                         }
                     }
-                    LocalDate localDate = LocalDate.now();
+                    LocalDate localDate = date;
                     join.date_creation = java.sql.Date.valueOf(localDate);
 
                     listJoin.add(join);
@@ -91,8 +91,8 @@ public class Join_Skill_Job {
 
     public static void insertSQL(String url,
                                  String user,
-                                 String password) throws IOException, SQLException {
-        List<Join_Skill_Job> listJoin = Join_Skill_Job.generateAllJoin(url,user,password);
+                                 String password, LocalDate date) throws IOException, SQLException {
+        List<Join_Skill_Job> listJoin = Join_Skill_Job.generateAllJoin(url,user,password, date);
         List<User> listUser = User.collectSQL(url, user, password);
         try (Connection conn = DriverManager.getConnection(url, user, password)){
 

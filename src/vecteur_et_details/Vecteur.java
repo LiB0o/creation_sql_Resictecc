@@ -134,7 +134,7 @@ public class Vecteur {
 
     public static List<Vecteur> generateAllVecteur(String url,
                                                    String user,
-                                                   String password) throws SQLException {
+                                                   String password, LocalDate date) throws SQLException {
 
             Random rand = new Random();
             List<Vecteur> vecteurs = new ArrayList<Vecteur>();
@@ -179,7 +179,7 @@ public class Vecteur {
 
                     v.setNbKM(rand.nextInt(100000)); //nbmax
 
-                    LocalDate localDate = LocalDate.now();
+                    LocalDate localDate = date;
                     v.setDate_aquis(java.sql.Date.valueOf(Utils.addDays(localDate,-rand.nextInt(1095))));
                     v.setDate_last_checkup(java.sql.Date.valueOf(Utils.addDays(localDate,-rand.nextInt(1095))));
 
@@ -247,8 +247,8 @@ public class Vecteur {
 
     public static void insertSQL(String url,
                                  String user,
-                                 String password) throws IOException, SQLException {
-        List<Vecteur> listVecteur = generateAllVecteur(url,user,password);
+                                 String password, LocalDate date) throws IOException, SQLException {
+        List<Vecteur> listVecteur = generateAllVecteur(url,user,password, date);
         try (Connection conn = DriverManager.getConnection(url, user, password)){
 
             for(Vecteur v : listVecteur){

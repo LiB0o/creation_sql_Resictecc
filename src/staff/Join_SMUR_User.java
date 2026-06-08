@@ -17,12 +17,12 @@ public class Join_SMUR_User {
         this.date_emploi = null;
     }
 
-    public static List<Join_SMUR_User> generateAllJoin(String url, String user, String password) {
+    public static List<Join_SMUR_User> generateAllJoin(String url, String user, String password, LocalDate date) {
         try {
             List<Join_SMUR_User> listJoin = new ArrayList<>();
             List<SMUR> listSmur = SMUR.collectSQL(url, user, password);
             List<User> listUser = User.collectSQL(url, user, password);
-            LocalDate localDate = LocalDate.now();
+            LocalDate localDate = date;
             int nbSmur = listSmur.size();
             Random rand = new Random();
 
@@ -47,8 +47,8 @@ public class Join_SMUR_User {
     }
 
 
-    public static void insertSQL(String url, String user, String password) {
-        List<Join_SMUR_User> listJoin = Join_SMUR_User.generateAllJoin(url, user, password);
+    public static void insertSQL(String url, String user, String password, LocalDate date) {
+        List<Join_SMUR_User> listJoin = Join_SMUR_User.generateAllJoin(url, user, password, date);
 
         try (Connection conn = DriverManager.getConnection(url, user, password)){
 

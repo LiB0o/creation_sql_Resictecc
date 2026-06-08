@@ -54,7 +54,7 @@ public class Job {
         return id;
     }
 
-    public static List<Job> generateAllJob() throws IOException {
+    public static List<Job> generateAllJob(LocalDate dateParam) throws IOException {
         try{
             List<Job> typesStaff = new ArrayList<>();
             FileInputStream file = new FileInputStream(new File("assets/GL_SQL_datas.xlsx"));
@@ -78,7 +78,7 @@ public class Job {
                                 break;
                         }
                     }
-                    LocalDate date = LocalDate.now();
+                    LocalDate date = dateParam;
                     job.dateCrea = java.sql.Date.valueOf(date);
 
                     typesStaff.add(job);
@@ -96,8 +96,8 @@ public class Job {
 
     public static void insertSQL(String url,
                                  String user,
-                                 String password) throws IOException, SQLException {
-        List<Job> listJobs = generateAllJob();
+                                 String password, LocalDate date) throws IOException, SQLException {
+        List<Job> listJobs = generateAllJob(date);
         try (Connection conn = DriverManager.getConnection(url, user, password)){
 
             for(Job j : listJobs){

@@ -150,7 +150,7 @@ public class DAMU {
     public static List<DAMU> generateAllDAMU(String url,
                                              String user,
                                              String password,
-                                             int nbDAMUs) throws SQLException, IOException {
+                                             int nbDAMUs, LocalDate date) throws SQLException, IOException {
 
         //System.out.println("generateAllDAMU : enter");
 
@@ -191,7 +191,7 @@ public class DAMU {
             int pos_operator = rand.nextInt(users_premier_contact.size());
             damu.setId_staff_demandeur(users_premier_contact.get(pos_operator).getRowid());
 
-            LocalDate localDate = LocalDate.now();
+            LocalDate localDate = date;
             damu.setDate(java.sql.Date.valueOf(Utils.addDays(localDate,-rand.nextInt(1095))));
 
             int valide = rand.nextInt(100);
@@ -212,9 +212,9 @@ public class DAMU {
 
     public static void insertSQL(String url,
                                  String user,
-                                 String password) throws IOException, SQLException {
+                                 String password, LocalDate date) throws IOException, SQLException {
 
-        List<DAMU> listDAMUs = generateAllDAMU(url, user, password, 100);
+        List<DAMU> listDAMUs = generateAllDAMU(url, user, password, 100, date);
         //System.out.println("insert DAMU : damus ok");
 
         try (Connection conn = DriverManager.getConnection(url, user, password)){

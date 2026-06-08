@@ -92,7 +92,7 @@ public class Materiel {
                 '}';
     }
 
-    public static List<Materiel> generateAllMateriel(String url, String user, String password) throws IOException {
+    public static List<Materiel> generateAllMateriel(String url, String user, String password, LocalDate date) throws IOException {
         try{
             List<Materiel> materiels = new ArrayList<>();
             List<TypeMateriel> typeMateriels = TypeMateriel.collectSQL(url,user,password);
@@ -130,7 +130,7 @@ public class Materiel {
                                 }
                             }
                             mat.immatriculation_vehicule_associe = v.getImmatriculation();
-                            LocalDate localDate = LocalDate.now();
+                            LocalDate localDate = date;
                             mat.date_peremption = java.sql.Date.valueOf(Utils.addDays(localDate, rand.nextInt(120)));
 
 
@@ -160,7 +160,7 @@ public class Materiel {
                             }
                         }
                         //mat.immatriculation_vehicule_associe = v.getImmatriculation();
-                        LocalDate localDate = LocalDate.now();
+                        LocalDate localDate = date;
                         mat.date_peremption = java.sql.Date.valueOf(Utils.addDays(localDate, rand.nextInt(120)));
 
 
@@ -190,8 +190,8 @@ public class Materiel {
 
     public static void insertSQL(String url,
                                  String user,
-                                 String password) throws IOException {
-        List<Materiel> listMateriel = generateAllMateriel(url,user,password);
+                                 String password, LocalDate date) throws IOException {
+        List<Materiel> listMateriel = generateAllMateriel(url,user,password, date);
         try (Connection conn = DriverManager.getConnection(url, user, password)){
             System.out.println("Connected to the DB");
 

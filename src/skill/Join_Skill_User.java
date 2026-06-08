@@ -44,12 +44,12 @@ public class Join_Skill_User {
                 '}';
     }
 
-    public static List<Join_Skill_User> generateAllJoin(String url, String user, String password) throws IOException {
+    public static List<Join_Skill_User> generateAllJoin(String url, String user, String password, LocalDate date) throws IOException {
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
             List<Join_Skill_User> listSkUs = new ArrayList<>();
             List<Skill> allSkills = Skill.collectSQL(url, user, password);
             List<Join_Staff_Job> listUsJob = Join_Staff_Job.collectSQL(url, user, password);
-            LocalDate localDate = LocalDate.now();
+            LocalDate localDate = date;
 
             for(Join_Staff_Job uj : listUsJob) {
                 Random rand = new Random();
@@ -101,8 +101,8 @@ public class Join_Skill_User {
         }
     }
 
-    public static void insertSQL(String url, String user, String password) throws IOException, SQLException {
-        List<Join_Skill_User> listJoin = Join_Skill_User.generateAllJoin(url,user,password);
+    public static void insertSQL(String url, String user, String password, LocalDate date) throws IOException, SQLException {
+        List<Join_Skill_User> listJoin = Join_Skill_User.generateAllJoin(url,user,password, date);
         List<User> listUser = User.collectSQL(url, user, password);
 
         try (Connection conn = DriverManager.getConnection(url, user, password)){

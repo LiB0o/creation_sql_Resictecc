@@ -74,7 +74,7 @@ public class Skill {
                 ", date_validite='" + date_validite + "\'}";
     }
 
-    public static List<Skill> generateAllSkill() throws IOException {
+    public static List<Skill> generateAllSkill(LocalDate date) throws IOException {
         try {
             List<Skill> skills = new ArrayList<>();
             FileInputStream file = new FileInputStream(new File("assets/GL_SQL_datas.xlsx"));
@@ -100,7 +100,7 @@ public class Skill {
                                 skill.description = cell.getStringCellValue();
                         }
                     }
-                    LocalDate localDate = LocalDate.now();
+                    LocalDate localDate = date;
                     skill.date_creation = java.sql.Date.valueOf(localDate);
 
                     skill.date_validite = rand.nextInt(365);
@@ -147,8 +147,8 @@ public class Skill {
 
     public static void insertSQL(String url,
                                  String user,
-                                 String password) throws IOException, SQLException {
-        List<Skill> listSkill = generateAllSkill();
+                                 String password, LocalDate date) throws IOException, SQLException {
+        List<Skill> listSkill = generateAllSkill(date);
         List<User> listUser = User.collectSQL(url, user, password);
         try (Connection conn = DriverManager.getConnection(url, user, password)){
 
