@@ -51,7 +51,6 @@ public class Join_SMUR_User {
         List<Join_SMUR_User> listJoin = Join_SMUR_User.generateAllJoin(url, user, password);
 
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(Join_SMUR_User j : listJoin) {
                 String sql = "INSERT INTO `llx_resisteccsamusmur_employer_smur`(`id_staff`,`idSMUR`,`date_emploi`)" +

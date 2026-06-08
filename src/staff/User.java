@@ -255,7 +255,6 @@ public class User {
         List<User> users = User.rendreUniques(users_temp);
 
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(User u : users){
                 String sql = "INSERT INTO " +
@@ -316,8 +315,6 @@ public class User {
 
             Statement stat = null;
 
-            System.out.println("Connected to the DB");
-
             stat = conn.createStatement();
             String sql = "SELECT * FROM llx_user";
             ResultSet resultSQL = stat.executeQuery(sql);
@@ -344,12 +341,10 @@ public class User {
                                         String user,
                                         String password) throws SQLException {
         List<User> users = new ArrayList<>();
-        //System.out.println("regulator : enter");
+
         try (Connection conn = DriverManager.getConnection(url, user, password)){
 
             Statement stat = null;
-
-            //System.out.println("Connected to the DB");
 
             stat = conn.createStatement();
             String sql = "SELECT * \n" +
@@ -390,8 +385,6 @@ public class User {
 
             Statement stat = null;
 
-            System.out.println("Connected to the DB");
-
             stat = conn.createStatement();
             String sql = "SELECT * \n" +
                     "FROM llx_hrm_job\n" +
@@ -426,8 +419,6 @@ public class User {
         try (Connection conn = DriverManager.getConnection(url, user, password)){
 
             Statement stat = null;
-
-            //System.out.println("Connected to the DB");
 
             stat = conn.createStatement();
             String sql = "SELECT * \n" +
@@ -468,8 +459,6 @@ public class User {
         try (Connection conn = DriverManager.getConnection(url, user, password)){
 
             Statement stat = null;
-
-            //System.out.println("Connected to the DB");
 
             stat = conn.createStatement();
             String sql = "SELECT * \n" +

@@ -106,7 +106,6 @@ public class Join_Skill_User {
         List<User> listUser = User.collectSQL(url, user, password);
 
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(Join_Skill_User skillUser : listJoin) {
                 String sql1 = "INSERT INTO `llx_hrm_skillrank`(`fk_skill`,`rankorder`,`fk_object`,`date_creation`,`fk_user_creat`,`objecttype`)" +
@@ -140,8 +139,6 @@ public class Join_Skill_User {
             List<Join_Skill_User> listJoin = new ArrayList<>();
 
             Statement stat = null;
-
-            System.out.println("Connected to the DB");
 
             stat = conn.createStatement();
             String sql = "SELECT sr.rowid, sr.fk_skill, sr.fk_object, sr.date_creation, ex.date_obtention " +

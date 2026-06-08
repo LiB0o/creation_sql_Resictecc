@@ -95,7 +95,6 @@ public class TypeLocalisation {
                                  String password) throws IOException {
         try (Connection conn = DriverManager.getConnection(url, user, password)){
             List<TypeLocalisation> list = generateAllTypeLocalisation();
-            System.out.println("Connected to the DB");
 
             for(TypeLocalisation tl : list){
                 String sql = "INSERT INTO `llx_resisteccsamusmur_type_localisation`(`type_localisation_nom`, `abreviation`) " +
@@ -112,9 +111,4 @@ public class TypeLocalisation {
         }
 
     }
-
-    /*public static void main(String[] args) throws IOException {
-        insertSQL();
-        System.out.println("insertSQL done");
-    }*/
 }

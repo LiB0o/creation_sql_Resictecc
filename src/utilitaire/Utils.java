@@ -29,10 +29,6 @@ public class Utils {
         return time.plusMinutes(minutes);
     }
 
-    /*public static void main(String[] args) {
-        Utils.chiffrementPassword("password");
-    }*/
-
     private static String generate_password() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
@@ -43,8 +39,6 @@ public class Utils {
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
-
-        //System.out.println(generatedString);
 
         return generatedString;
     }

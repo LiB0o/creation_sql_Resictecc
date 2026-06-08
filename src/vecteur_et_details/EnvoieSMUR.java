@@ -1,6 +1,5 @@
 package vecteur_et_details;
 
-import org.apache.commons.math3.analysis.function.Abs;
 import samu_intervention.BAMU;
 import staff.User;
 import utilitaire.Utils;

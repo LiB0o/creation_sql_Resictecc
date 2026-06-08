@@ -79,12 +79,4 @@ public class Localisation {
             throw new RuntimeException(e);
         }
     }
-
-
-    public static void main(String[] args) throws IOException{
-        List<Localisation> localisations = generateAllLocation(3);
-        for(Localisation l : localisations){
-            System.out.println(l.toString());
-        }
-    }
 }

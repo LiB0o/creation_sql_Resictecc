@@ -101,8 +101,6 @@ public class TypeVecteur {
 
             Statement stat = null;
 
-            System.out.println("Connected to the DB");
-
             stat = conn.createStatement();
             String sql = "SELECT * FROM llx_resisteccsamusmur_type_vecteur";
             ResultSet resultSQL = stat.executeQuery(sql);
@@ -128,7 +126,6 @@ public class TypeVecteur {
                                  String password) throws IOException {
         List<TypeVecteur> listTypeVecteur = generateAllTypeVecteur();
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(TypeVecteur t : listTypeVecteur){
                 String sql = "INSERT INTO `llx_resisteccsamusmur_type_vecteur`(`name`) " +

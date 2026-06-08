@@ -51,7 +51,6 @@ public class Join_SAMU_User {
         List<Join_SAMU_User> listJoin = Join_SAMU_User.generateAllJoin(url, user, password);
 
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(Join_SAMU_User j : listJoin) {
                 String sql = "INSERT INTO `llx_resisteccsamusmur_employer_samu`(`id_staff`,`id_SAMU`,`date_debut_contract`)" +

@@ -99,7 +99,6 @@ public class Job {
                                  String password) throws IOException, SQLException {
         List<Job> listJobs = generateAllJob();
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(Job j : listJobs){
                 String sql = "INSERT INTO " +
@@ -126,8 +125,6 @@ public class Job {
 
             Statement stat = null;
 
-            System.out.println("Connected to the DB");
-
             stat = conn.createStatement();
             String sql = "SELECT * FROM llx_hrm_job";
             ResultSet resultSQL = stat.executeQuery(sql);
@@ -149,13 +146,4 @@ public class Job {
         }
     }
 
-
-    /*public static void main(String[] args) throws IOException {
-        List<Job> jobs = generateAllJob();
-
-        for(Job j: jobs){
-            System.out.println(j.toString());
-        }
-        //System.out.println("insertSQL done");
-    }*/
 }
