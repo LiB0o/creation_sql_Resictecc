@@ -95,7 +95,6 @@ public class Join_Skill_Job {
         List<Join_Skill_Job> listJoin = Join_Skill_Job.generateAllJoin(url,user,password);
         List<User> listUser = User.collectSQL(url, user, password);
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(Join_Skill_Job j : listJoin){
                 String sql = "INSERT INTO " +

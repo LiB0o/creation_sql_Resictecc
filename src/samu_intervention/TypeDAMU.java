@@ -114,8 +114,6 @@ public class TypeDAMU {
         try(Connection conn = DriverManager.getConnection(url, user, password)){
             Statement stat = null;
 
-            System.out.println("Connected to the DB");
-
             stat = conn.createStatement();
             String sql = "SELECT * FROM llx_resisteccsamusmur_type_bamu";
             ResultSet resultSQL = stat.executeQuery(sql);
@@ -142,8 +140,6 @@ public class TypeDAMU {
 
         try(Connection conn = DriverManager.getConnection(url, user, password)){
             Statement stat = null;
-
-            System.out.println("Connected to the DB");
 
             stat = conn.createStatement();
             String sql = "SELECT * FROM llx_resisteccsamusmur_type_bamu WHERE id_type_BAMU ="+id;

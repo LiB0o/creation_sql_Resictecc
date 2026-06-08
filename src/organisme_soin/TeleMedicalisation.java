@@ -273,7 +273,6 @@ public class TeleMedicalisation {
         Random rand = new Random();
 
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(TeleMedicalisation u : users){
                 String sql = "INSERT INTO " +
@@ -310,8 +309,6 @@ public class TeleMedicalisation {
             List<TeleMedicalisation> vecteurs = new ArrayList<>();
 
             Statement stat = null;
-
-            System.out.println("Connected to the DB");
 
             stat = conn.createStatement();
             String sql = "SELECT * FROM llx_resisteccsamusmur_telemedicalisation";

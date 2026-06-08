@@ -135,7 +135,6 @@ public class Ambulance {
         Random rand = new Random();
 
         try(Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(Ambulance a : ambulances){
                 String sql = "INSERT INTO " +
@@ -167,7 +166,6 @@ public class Ambulance {
             List<Ambulance> listAmb = new ArrayList<>();
 
             Statement stat = null;
-            System.out.println("Connected to the DB");
             stat = conn.createStatement();
 
             String sql = "SELECT * FROM llx_resisteccsamusmur_ambulances";

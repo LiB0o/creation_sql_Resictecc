@@ -123,8 +123,6 @@ public class Skill {
 
             Statement stat = null;
 
-            System.out.println("Connected to the DB");
-
             stat = conn.createStatement();
             String sql = "SELECT * FROM llx_hrm_skill";
             ResultSet resultSQL = stat.executeQuery(sql);
@@ -153,7 +151,6 @@ public class Skill {
         List<Skill> listSkill = generateAllSkill();
         List<User> listUser = User.collectSQL(url, user, password);
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(Skill s : listSkill){
                 String sql =

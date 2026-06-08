@@ -145,7 +145,6 @@ public class BAMU {
         //System.out.println("insert DAMU : damus ok");
 
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(BAMU b : listBAMUs){
                 String sql = "INSERT INTO " +

@@ -104,7 +104,6 @@ public class PDS {
         Random rand = new Random();
 
         try(Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("PDS : Connected to the DB");
 
             for(PDS p : liste_pds){
                 String sql = "INSERT INTO " +
@@ -137,8 +136,6 @@ public class PDS {
             List<PDS> vecteurs = new ArrayList<>();
 
             Statement stat = null;
-
-            System.out.println("Connected to the DB");
 
             stat = conn.createStatement();
             String sql = "SELECT * FROM llx_resisteccsamusmur_pds";

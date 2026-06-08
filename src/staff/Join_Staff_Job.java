@@ -97,7 +97,6 @@ public class Join_Staff_Job {
                                  String password) throws IOException, SQLException {
         List<Join_Staff_Job> listJoin = Join_Staff_Job.generateAllJoin(url,user,password);
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(Join_Staff_Job j : listJoin){
                 String sql = "INSERT INTO " +

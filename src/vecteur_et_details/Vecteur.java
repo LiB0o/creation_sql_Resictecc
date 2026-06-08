@@ -250,7 +250,6 @@ public class Vecteur {
                                  String password) throws IOException, SQLException {
         List<Vecteur> listVecteur = generateAllVecteur(url,user,password);
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(Vecteur v : listVecteur){
                 String sql = "INSERT INTO " +
@@ -287,8 +286,6 @@ public class Vecteur {
             List<Vecteur> vecteurs = new ArrayList<>();
 
             Statement stat = null;
-
-            System.out.println("Connected to the DB");
 
             stat = conn.createStatement();
             String sql = "SELECT * FROM llx_resisteccsamusmur_vecteur";

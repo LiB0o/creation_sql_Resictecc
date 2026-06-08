@@ -41,7 +41,7 @@ public class Join_Victime_DAMU {
                 int type = d.getId_type_BAMU();
 
                 Random rand = new Random();
-                int nbVic = rand.nextInt(4);
+                int nbVic = 1;
 
                 ArrayList<Integer> ids_victimes = new ArrayList<>();
 

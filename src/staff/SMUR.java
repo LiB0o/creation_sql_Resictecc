@@ -116,8 +116,6 @@ public class SMUR {
 
             Statement stat = null;
 
-            System.out.println("Connected to the DB");
-
             stat = conn.createStatement();
             String sql = "SELECT * FROM llx_resisteccsamusmur_smur";
             ResultSet resultSQL = stat.executeQuery(sql);
@@ -143,7 +141,6 @@ public class SMUR {
                                  String password) throws IOException {
         List<SMUR> listSMUR = generateAllSMUR();
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(SMUR s : listSMUR){
                 String sql = "INSERT INTO `llx_resisteccsamusmur_smur`(`nom_SMUR`,`id_SAMU`) " +

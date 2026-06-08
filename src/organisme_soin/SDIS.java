@@ -71,7 +71,6 @@ public class SDIS {
         for(int i =0; i<nbSDIS; i++){
             SDIS sdis = new SDIS();
 
-            //victime.setTel(Ambulance.randomTel());
             sdis.setAdresse(localisations.get(i).toString());
             sdis.setId("SDIS"+(i+1));
             sdis.setNom("SDIS n° "+i);
@@ -93,7 +92,6 @@ public class SDIS {
 
         try{
             conn = DriverManager.getConnection(url,user,password);
-            System.out.println("Connected to the DB");
 
             for(SDIS s : liste_sdis){
                 String sql = "INSERT INTO " +
@@ -123,8 +121,6 @@ public class SDIS {
             List<SDIS> vecteurs = new ArrayList<>();
 
             Statement stat = null;
-
-            System.out.println("Connected to the DB");
 
             stat = conn.createStatement();
             String sql = "SELECT * FROM llx_resisteccsamusmur_sdis";
