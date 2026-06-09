@@ -137,6 +137,27 @@ public class User {
                 '}';
     }
 
+    public static List<User> generateAllPartitipants( int nbUser) throws SQLException, IOException {
+
+        List<User> users = new ArrayList<>();
+        Random rand = new Random();
+
+        for(int i =0; i<nbUser; i++){
+            User user = new User(true);
+
+            user.setLogin("participant"+(i+1));
+
+            user.setPassword(Utils.chiffrementPassword("participant"+(i+1)));
+
+            users.add(user);
+
+        }
+
+
+        return users;
+    }
+
+
     public static List<User> generateAllFemaleUser( int nbUser) throws SQLException, IOException {
 
         List<User> users = new ArrayList<>();
@@ -253,6 +274,8 @@ public class User {
         users_temp.addAll(generateAllMaleUser(30));
 
         List<User> users = User.rendreUniques(users_temp);
+
+        users.addAll(generateAllPartitipants(20));
 
         try (Connection conn = DriverManager.getConnection(url, user, password)){
 
