@@ -1,7 +1,7 @@
 # Creation_SQL_Resictecc
  Creation_SQL_Resictecc est un script Java qui permet de remplir une base de données PHPMyAdmin pour le projet Resitecc au niveau du module SAMU/SMUR
 
- ## Instalation
+ ## Installation
  Télécharger l'archive et compiler le projet. 
 
  ## Usage
