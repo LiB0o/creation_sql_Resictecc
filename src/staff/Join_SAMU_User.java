@@ -17,6 +17,17 @@ public class Join_SAMU_User {
         this.date_emploi = null;
     }
 
+    /**
+     * Créer la liste des lien SAMU_Staff à insérer
+     * Besoin de lire les tables SAMU et Staff (user)
+     *
+     * @author Marine Virot
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @param date Date de l'exercice
+     * @return Liste des jointure
+     */
     public static List<Join_SAMU_User> generateAllJoin(String url, String user, String password, LocalDate date) {
         try {
             List<Join_SAMU_User> listJoin = new ArrayList<>();
@@ -46,7 +57,15 @@ public class Join_SAMU_User {
         }
     }
 
-
+    /**
+     * Insert dans la table llx_resisteccsamusmur_employer_samu la liste des jointures
+     *
+     * @author Marine Virot
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire l'insertion
+     * @param password  mot de passe du compte de la base de données qui va faire l'insertion
+     * @param date Date de l'exercice
+     */
     public static void insertSQL(String url, String user, String password, LocalDate date) {
         List<Join_SAMU_User> listJoin = Join_SAMU_User.generateAllJoin(url, user, password, date);
 
