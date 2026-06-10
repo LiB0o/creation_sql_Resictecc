@@ -349,7 +349,7 @@ public class TeleMedicalisation {
 
 
     /**
-     * Collecte tout les médecins dans llx_resisteccsamusmur_ambulances.
+     * Collecte tout les médecins dans llx_resisteccsamusmur_telemedicalisation.
      *
      * @author Marine Virot
      * @param url adresse url vers la base de données

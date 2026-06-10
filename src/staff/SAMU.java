@@ -55,6 +55,13 @@ public class SAMU {
                 '}';
     }
 
+    /**
+     * Créer une liste de SAMU en utilisant une feuille Excel
+     *
+     * @author Lison Boo
+     * @return Liste de SAMU
+     * @throws IOException Erreur si la feuille Excel n'existe pas
+     */
     public static List<SAMU> generateAllSAMU() throws IOException {
         try{
             List<SAMU> samus = new ArrayList<SAMU>();
@@ -94,6 +101,15 @@ public class SAMU {
         }
     }
 
+    /**
+     * Insert la liste de SAMU dans la table llx_resisteccsamusmur_samu
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire l'insertion
+     * @param password mot de passe du compte de la base de données qui va faire l'insertion
+     * @throws IOException Voir generateAllSAMU
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException {
@@ -115,6 +131,16 @@ public class SAMU {
     }
 
 
+    /**
+     * Collecte tout les SAMU
+     *
+     * @author Marine Virot
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des SAMU
+     * @throws SQLException Si la connexion/lecture se déroule mal
+     */
     public static List<SAMU> collectSQL(String url,
                                         String user,
                                         String password) throws SQLException {

@@ -147,21 +147,30 @@ public class DAMU {
     }
 
 
+    /**
+     * Génére les DAMUs à insérer en utilisant le staff du SAMU
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture du staff
+     * @param password mot de passe du compte de la base de données qui va faire la lecture du staff
+     * @param nbDAMUs nombre de DAMU à générer
+     * @param date Date de l'exercice
+     * @return Liste des DAMU
+     * @throws SQLException Erreur si la connection/lecture à la base de données
+     * @throws IOException Voir Localisation.generateAllLocation
+     */
     public static List<DAMU> generateAllDAMU(String url,
                                              String user,
                                              String password,
                                              int nbDAMUs, LocalDate date) throws SQLException, IOException {
 
-        //System.out.println("generateAllDAMU : enter");
 
         List<DAMU> damus = new ArrayList<>();
-        //System.out.println("generateAllDAMU : damus empty ok");
         List<User> users_regulators = User.collectSQL_Regulator(url, user, password);
-        //System.out.println("generateAllDAMU : regulator ok");
+
         List<User> users_premier_contact = User.collectSQL_Operator(url, user, password);
-        //System.out.println("generateAllDAMU : contact ok");
         List<TypeDAMU> typeDAMUS = TypeDAMU.collect(url, user, password);
-        //System.out.println("generateAllDAMU : type damu");
         List<Localisation> localisations = Localisation.generateAllLocation(nbDAMUs);
 
         Random rand = new Random();
@@ -210,6 +219,17 @@ public class DAMU {
         return damus;
     }
 
+    /**
+     * Insert les DAMUs dans la table llx_resisteccsamusmur_damu
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire l'insertion
+     * @param password mot de passe du compte de la base de données qui va faire l'insertion
+     * @param date Date de l'exercice
+     * @throws IOException Voir generateAllDAMU
+     * @throws SQLException Voir generateAllDAMU & Erreur si la connection/insertion à la base de données
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password, LocalDate date) throws IOException, SQLException {
@@ -254,6 +274,16 @@ public class DAMU {
     }
 
 
+    /**
+     * Collecte tout les DAMUs
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des DAMUs
+     * @throws SQLException Erreur si la connection/lecture à la base de données
+     */
     public static List<DAMU> collectSQL(String url,
                                            String user,
                                            String password) throws SQLException {
@@ -291,6 +321,17 @@ public class DAMU {
         }
     }
 
+    /**
+     * Collecte le DAMU avec un id particulier
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @param idDAMU id de la demande à chercher
+     * @return un DAMU vide (si id non présente) ou un DAMU avec infos
+     * @throws SQLException Erreur si la connection/lecture à la base de données
+     */
     public static DAMU collectSQL_One_demand(String url,
                                         String user,
                                         String password, String idDAMU) throws SQLException {

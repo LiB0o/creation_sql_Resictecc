@@ -105,6 +105,18 @@ public class BAMU {
                 '}';
     }
 
+    /**
+     * Génére une liste de BAMU (besoin d'intervention) en utilisant les DAMUs (demandes d'intervention)
+     * Oui les demandes sont avant les besoins
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture des DAMUs
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des BAMUs
+     * @throws SQLException Erreur lors de la connection ou lecture des DAMUs
+     * @throws IOException voir TypeDAMU.collectOne
+     */
     public static List<BAMU> generateAllBAMU(String url,
                                              String user,
                                              String password) throws SQLException, IOException {
@@ -137,6 +149,16 @@ public class BAMU {
         return bamus;
     }
 
+    /**
+     * Insert les BAMU dans la table llx_resisteccsamusmur_bamu
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire l'insertion
+     * @param password mot de passe du compte de la base de données qui va faire l'insertion
+     * @throws IOException Voir generateAllBAMU
+     * @throws SQLException Si il y a eu un problème lors de la connection ou insertion
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
@@ -173,6 +195,16 @@ public class BAMU {
         }
     }
 
+    /**
+     * Collecte tout les BAMUs dans llx_resisteccsamusmur_bamu.
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return La liste des BAMU
+     * @throws SQLException Si il y a eu un problème lors de la connection ou lecture
+     */
     public static List<BAMU> collectSQL(String url,
                                         String user,
                                         String password) throws SQLException {
@@ -202,6 +234,17 @@ public class BAMU {
         }
     }
 
+    /**
+     * Collecte le BAMU dans llx_resisteccsamusmur_bamu avec l'id donné.
+     *
+     * @author Marine Virot
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @param id id du BAMU recherché
+     * @return un BAMU vide (si l'id n'existe pas) ou un BAMU avec toute ces informations
+     * @throws SQLException Si il y a eu un problème lors de la connection ou lecture
+     */
     public static BAMU collectSQLOne(String url,
                                         String user,
                                         String password, int id) throws SQLException {

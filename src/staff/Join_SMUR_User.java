@@ -17,6 +17,17 @@ public class Join_SMUR_User {
         this.date_emploi = null;
     }
 
+    /**
+     * Créer la liste des lien SMUR_Staff à insérer
+     * Besoin de lire les tables SMUR et Staff (user)
+     *
+     * @author Marine Virot
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @param date Date de l'exercice
+     * @return Liste des jointure
+     */
     public static List<Join_SMUR_User> generateAllJoin(String url, String user, String password, LocalDate date) {
         try {
             List<Join_SMUR_User> listJoin = new ArrayList<>();
@@ -46,7 +57,15 @@ public class Join_SMUR_User {
         }
     }
 
-
+    /**
+     * Insert dans la table llx_resisteccsamusmur_employer_smur la liste des jointures
+     *
+     * @author Marine Virot
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire l'insertion
+     * @param password  mot de passe du compte de la base de données qui va faire l'insertion
+     * @param date Date de l'exercice
+     */
     public static void insertSQL(String url, String user, String password, LocalDate date) {
         List<Join_SMUR_User> listJoin = Join_SMUR_User.generateAllJoin(url, user, password, date);
 

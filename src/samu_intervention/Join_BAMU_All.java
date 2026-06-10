@@ -29,6 +29,16 @@ public class Join_BAMU_All {
         this.id_pds = null;
     }
 
+    /**
+     * Change l'ambulance si elle est déjà présente dans la liste
+     *
+     * @author Marine Virot
+     * @param idsVictimes Liste des ambulances déjà présentes
+     * @param list Liste de toute les ambulances
+     * @param idVic id de l'ambulance actuel
+     * @param range Taille de list
+     * @return id de l'ambulance choisie
+     */
     private static String uniqueIdAmbulance(List<String> idsVictimes, List<Ambulance> list, String idVic, int range) {
 
         for(String ids : idsVictimes){
@@ -41,6 +51,16 @@ public class Join_BAMU_All {
         return idVic;
     }
 
+    /**
+     * Change la permanance de soin si elle est déjà présente dans la liste
+     *
+     * @author Marine Virot
+     * @param idsVictimes Liste des permanances déjà présentes
+     * @param list Liste de toutes les permanances
+     * @param idVic id de la permanance actuel
+     * @param range Taille de list
+     * @return id de la permanance choisie
+     */
     private static String uniqueIdPDS(List<String> idsVictimes, List<PDS> list, String idVic, int range) {
 
         for(String ids : idsVictimes){
@@ -53,6 +73,16 @@ public class Join_BAMU_All {
         return idVic;
     }
 
+    /**
+     * Change le SDIS si il est déjà présent dans la liste
+     *
+     * @author Marine Virot
+     * @param idsVictimes Liste des SDIS déjà présents
+     * @param list Liste de tout les SDIS
+     * @param idVic id du SDIS actuel
+     * @param range Taille de list
+     * @return id du SDIS choisi
+     */
     private static String uniqueIdSDIS(List<String> idsVictimes, List<SDIS> list, String idVic, int range) {
 
         for(String ids : idsVictimes){
@@ -65,6 +95,16 @@ public class Join_BAMU_All {
         return idVic;
     }
 
+    /**
+     * Change l'id du médecin en télémédicalisation si il est déjà dans la liste
+     *
+     * @author Marine Virot
+     * @param idsVictimes Liste des médecins déjà présents
+     * @param list Liste de tout les Médecins
+     * @param idVic id du Médecin actuel
+     * @param range Taille de list
+     * @return id du Médecin choisi
+     */
     private static String uniqueIdTEL(List<String> idsVictimes, List<TeleMedicalisation> list, String idVic, int range) {
 
         for(String ids : idsVictimes){
@@ -78,6 +118,16 @@ public class Join_BAMU_All {
     }
 
 
+    /**
+     * Génére toute les futures envoie des différents organismes (SDIS, PDS, Ambulances privées, Médecins Télémédicalisation)
+     * A besoin de lire les tables de chaque organisme
+     *
+     * @author Marine Virot
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire les lectures
+     * @param password mot de passe du compte de la base de données qui va faire les lectures
+     * @return Liste des envoies
+     */
     public static List<Join_BAMU_All> generateAllJoin(String url, String user, String password) {
         try {
             List<Join_BAMU_All> listJoin = new ArrayList<>();
@@ -171,6 +221,16 @@ public class Join_BAMU_All {
         }
     }
 
+    /**
+     * Insert tout les envoies créer par generateAllJoin, renvoie une partie des BAMU qui n'a pas inserré pour les lier au SMUR
+     *
+     * @author Marine Virot
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire l'insertion
+     * @param password mot de passe du compte de la base de données qui va faire l'insertion
+     * @return Liste de BAMU
+     * @throws SQLException Erreur si la connection/insertion c'est mal dérroulé
+     */
     public static List<BAMU> insertSQL(String url, String user, String password) throws SQLException {
         List<Join_BAMU_All> listJoin = Join_BAMU_All.generateAllJoin(url, user, password);
         List<BAMU> listBamuLeft = new ArrayList<>();
