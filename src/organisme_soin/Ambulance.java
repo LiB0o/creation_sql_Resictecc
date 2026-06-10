@@ -114,7 +114,7 @@ public class Ambulance {
      *
      * @author Lison Boo
      * @param nbAmbulance Nombre d'ambulances privées à générer
-     * @return
+     * @return la liste de ambulances privées
      * @throws IOException vient de la fonction Localisation.generateAllLocation pour la lecture dans le fichier Excel
      */
     public static List<Ambulance> generateAmbulance(int nbAmbulance) throws IOException {
@@ -192,7 +192,7 @@ public class Ambulance {
      * @param user login du compte de la base de données qui va faire la lecture
      * @param password mot de passe du compte de la base de données qui va faire la lecture
      * @return Liste des ambulances privées
-     * @throws SQLException Si il y a eu un problème lors de la connection ou insertion
+     * @throws SQLException Si il y a eu un problème lors de la connection ou lecture
      */
     public static List<Ambulance> collectSQL(String url, String user, String password) throws SQLException {
         try (Connection conn = DriverManager.getConnection(url, user, password)) {

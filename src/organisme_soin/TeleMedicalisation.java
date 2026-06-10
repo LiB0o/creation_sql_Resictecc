@@ -105,6 +105,12 @@ public class TeleMedicalisation {
                 '}';
     }
 
+    /**
+     * Génére un numéro de téléphone qui commance par "08"
+     *
+     * @author Lison Boo
+     * @return une numéro de téléphone en String
+     */
     private static String randomTel(){
         String tel = "08";
         Random rand = new Random();
@@ -115,6 +121,13 @@ public class TeleMedicalisation {
         return  tel;
     }
 
+    /**
+     * Génére une liste de spécialisation médical (Ophtalmologue, Dentiste,...)
+     *
+     * @author Lison Boo
+     * @return La liste des spécialisations en format String
+     * @throws IOException Si la feuille Excel utilisé pour la génération n'existe plus.
+     */
     public static List<String> generateAllPosition() throws IOException {
         try{
             Random rand = new Random();
@@ -152,6 +165,14 @@ public class TeleMedicalisation {
         }
     }
 
+    /**
+     * Génére une liste de médecins femme pour être utilisé dans l'insertion dans la table assigné (llx_resisteccsamusmur_telemedicalisation).
+     *
+     * @author Lison Boo
+     * @param nbUser Nombre de médecins femme à générer
+     * @return La liste de médecins femme à insérer
+     * @throws IOException Voir la fonction generateAllPosition OU Si la feuille Excel utilisé pour la génération n'existe plus (Personne).
+     */
     public static List<TeleMedicalisation> generateMedMale(int nbUser) throws IOException {
         List<TeleMedicalisation> meds = new ArrayList<>();
 
@@ -202,6 +223,14 @@ public class TeleMedicalisation {
         return meds;
     }
 
+    /**
+     * Génére une liste de médecins homme pour être utilisé dans l'insertion dans la table assigné (llx_resisteccsamusmur_telemedicalisation).
+     *
+     * @author Lison Boo
+     * @param nbUser Nombre de médecins homme à générer
+     * @return La liste de médecins homme à insérer
+     * @throws IOException Voir la fonction generateAllPosition OU Si la feuille Excel utilisé pour la génération n'existe plus (Personne).
+     */
     public static List<TeleMedicalisation> generateMedFemale(int nbUser) throws IOException {
         List<TeleMedicalisation> meds = new ArrayList<>();
 
@@ -253,6 +282,13 @@ public class TeleMedicalisation {
         return meds;
     }
 
+    /**
+     * Assigne à chaque médecin un id
+     *
+     * @author Lison Boo
+     * @param meds Liste des médecins à qui mettre une id
+     * @return Liste des médecins avec un id par médecin
+     */
     public static List<TeleMedicalisation> setIds(List<TeleMedicalisation> meds){
         int index = 1;
         for(TeleMedicalisation t : meds){
@@ -262,6 +298,16 @@ public class TeleMedicalisation {
         return meds;
     }
 
+    /**
+     * Insert les médecins dans la table de la base de données
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire l'insertion
+     * @param password mot de passe du compte de la base de données qui va faire l'insertion
+     * @throws IOException voir generateMedFemale & generateMedMale
+     * @throws SQLException Si il y a eu un problème lors de la connection ou insertion
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
@@ -302,6 +348,16 @@ public class TeleMedicalisation {
     }
 
 
+    /**
+     * Collecte tout les médecins dans llx_resisteccsamusmur_ambulances.
+     *
+     * @author Marine Virot
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des médecins
+     * @throws SQLException Si il y a eu un problème lors de la connection ou lecture
+     */
     public static List<TeleMedicalisation> collectSQL(String url,
                                        String user,
                                        String password) throws SQLException {

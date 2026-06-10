@@ -63,6 +63,12 @@ public class PDS {
                 '}';
     }
 
+    /**
+     * Génére un numéro de téléphone qui commance par "08"
+     *
+     * @author Lison Boo
+     * @return une numéro de téléphone en String
+     */
     private static String randomTel(){
         String tel = "08";
         Random rand = new Random();
@@ -73,6 +79,14 @@ public class PDS {
         return  tel;
     }
 
+    /**
+     * Génére une liste de permanances de soin pour être utilisé dans l'insertion dans la table assigné (llx_resisteccsamusmur_pds).
+     *
+     * @author Lison Boo
+     * @param nbPDS Nombre de permanances de soin à générer
+     * @return liste des permanance de soin
+     * @throws IOException vient de la fonction Localisation.generateAllLocation pour la lecture dans le fichier Excel
+     */
     public static List<PDS> generatePDS(int nbPDS) throws IOException {
         List<PDS> liste_pds = new ArrayList<>();
 
@@ -94,6 +108,16 @@ public class PDS {
         return liste_pds;
     }
 
+    /**
+     * Insert les permanences de soin dans la table de la base de données
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire l'insertion
+     * @param password mot de passe du compte de la base de données qui va faire l'insertion
+     * @throws IOException Voir la fonction generatePDS
+     * @throws SQLException Si il y a eu un problème lors de la connection ou insertion
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
@@ -129,6 +153,16 @@ public class PDS {
     }
 
 
+    /**
+     * Collecte toute les permanences de soin dans llx_resisteccsamusmur_pds
+     *
+     * @author Marine Virot
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des permanances de soin
+     * @throws SQLException Si il y a eu un problème lors de la connection ou insertion
+     */
     public static List<PDS> collectSQL(String url,
                                         String user,
                                         String password) throws SQLException {

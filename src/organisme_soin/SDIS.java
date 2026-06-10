@@ -61,6 +61,14 @@ public class SDIS {
                 '}';
     }
 
+    /**
+     * Génére une liste des SDIS pour être utilisé dans l'insertion dans la table assigné (llx_resisteccsamusmur_sdis).
+     *
+     * @author Lison Boo
+     * @param nbSDIS Nombre de SDIS à générer
+     * @return Liste des SDIS
+     * @throws IOException vient de la fonction Localisation.generateAllLocation pour la lecture dans le fichier Excel
+     */
     public static List<SDIS> generateSDIS(int nbSDIS) throws IOException {
         List<SDIS> liste_sdis = new ArrayList<>();
 
@@ -81,6 +89,16 @@ public class SDIS {
         return liste_sdis;
     }
 
+    /**
+     * Insert les SDIS dans la table de la base de données
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire l'insertion
+     * @param password mot de passe du compte de la base de données qui va faire l'insertion
+     * @throws IOException Voir generateSDIS
+     * @throws SQLException Si il y a eu un problème lors de la connection ou insertion
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
@@ -114,6 +132,16 @@ public class SDIS {
         }
     }
 
+    /**
+     * Collecte tout les SDIS dans llx_resisteccsamusmur_sdis.
+     *
+     * @author Marine Virot
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des SDIS
+     * @throws SQLException Si il y a eu un problème lors de la connection ou insertion
+     */
     public static List<SDIS> collectSQL(String url,
                                        String user,
                                        String password) throws SQLException {
