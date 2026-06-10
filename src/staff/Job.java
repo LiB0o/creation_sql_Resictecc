@@ -54,6 +54,14 @@ public class Job {
         return id;
     }
 
+    /**
+     * Génére les différent jobs pour les staffs en lisant la liste dans une feuille Excel
+     *
+     * @author Lison Boo
+     * @param dateParam Date de l'exercice
+     * @return Liste des Jobs
+     * @throws IOException Erreur si la feuille Excel n'existe plus
+     */
     public static List<Job> generateAllJob(LocalDate dateParam) throws IOException {
         try{
             List<Job> typesStaff = new ArrayList<>();
@@ -94,6 +102,17 @@ public class Job {
         }
     }
 
+    /**
+     * Insert dans les jobs dans la table llx_hrm_job
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire l'insertion
+     * @param password mot de passe du compte de la base de données qui va faire l'insertion
+     * @param date Date de l'exercice
+     * @throws IOException Voir generateAllJob
+     * @throws SQLException Erreur si la connection/insertion se déroule mal
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password, LocalDate date) throws IOException, SQLException {
@@ -117,6 +136,16 @@ public class Job {
         }
     }
 
+    /**
+     * Collecte tout les jobs
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des jobs
+     * @throws SQLException Erreur si la connection/lecture se déroule mal
+     */
     public static List<Job> collectSQL(String url,
                                            String user,
                                            String password) throws SQLException {
