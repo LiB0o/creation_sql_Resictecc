@@ -56,6 +56,11 @@ public class TypeMateriel {
     }
 
 
+    /**
+     * Read the excel GL_SQL_datas.xlsx to generate a list of type_materiel
+     * @return list of type_materiel ready to be inserted
+     * @throws IOException
+     */
     public static List<TypeMateriel> generateAllTypeMateriel() throws IOException {
         try{
             List<TypeMateriel> typesMateriel = new ArrayList<TypeMateriel>();
@@ -93,6 +98,13 @@ public class TypeMateriel {
         }
     }
 
+    /**
+     * insert into the table type_materiels the generated data
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @throws IOException
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException {
@@ -113,6 +125,14 @@ public class TypeMateriel {
         }
     }
 
+    /**
+     * collect from the database the list of every type_materiel stored
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @return list of type_materiel collected from the database
+     * @throws SQLException
+     */
     public static List<TypeMateriel> collectSQL(String url,
                                                String user,
                                                String password) throws SQLException {

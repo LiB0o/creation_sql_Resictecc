@@ -132,6 +132,15 @@ public class Vecteur {
                 '}';
     }
 
+    /**
+     * Read the excel GL_SQL_datas.xlsx to generate a list of vecteurs
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @param date : the date used for generating data
+     * @return list of vecteurs ready to be inserted
+     * @throws SQLException
+     */
     public static List<Vecteur> generateAllVecteur(String url,
                                                    String user,
                                                    String password, LocalDate date) throws SQLException {
@@ -192,7 +201,11 @@ public class Vecteur {
     }
 
 
-
+    /**
+     * generate the immatriculation of an helico
+     * @param vecteurs : list of vecteurs with type is helico
+     * @return immatriculation
+     */
     private String generateImmatriculationHelico(List<Vecteur> vecteurs){
         Random rand = new Random();
 
@@ -209,6 +222,11 @@ public class Vecteur {
         return immatriculation;
     }
 
+    /**
+     * generate the immatriculation of VHL
+     * @param vecteurs : list of vecteurs with type is VHL
+     * @return immatriculation
+     */
     private String generateImmatriculationVHL(List<Vecteur> vecteurs){
         Random rand = new Random();
 
@@ -227,6 +245,11 @@ public class Vecteur {
         return immatriculation;
     }
 
+    /**
+     * generate the immatriculation of UMH
+     * @param vecteurs : list of vecteurs with type is UMH
+     * @return immatriculation
+     */
     private String generateImmatriculationUMH(List<Vecteur> vecteurs){
         Random rand = new Random();
 
@@ -245,6 +268,15 @@ public class Vecteur {
     }
 
 
+    /**
+     * insert into the table vecteur the generated data
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @param date : the date used for generating data
+     * @throws IOException
+     * @throws SQLException
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password, LocalDate date) throws IOException, SQLException {
@@ -279,6 +311,14 @@ public class Vecteur {
     }
 
 
+    /**
+     * collect from the database the list of every vecteur stored
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @return list of vecteur collected from the database
+     * @throws SQLException
+     */
     public static List<Vecteur> collectSQL(String url,
                                                String user,
                                                String password) throws SQLException {

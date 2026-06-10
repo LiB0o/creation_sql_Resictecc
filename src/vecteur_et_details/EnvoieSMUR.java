@@ -96,6 +96,15 @@ public class EnvoieSMUR {
                 '}';
     }
 
+    /**
+     * Read the excel GL_SQL_datas.xlsx to generate a list of envoi_ressource
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @param bamus : list of every bamus not used
+     * @return list of envoi_ressource ready to be inserted
+     * @throws SQLException
+     */
     public static List<EnvoieSMUR> generateAllEnvoie(String url, String user, String password, List<BAMU> bamus) throws SQLException {
         List<EnvoieSMUR> envoies = new ArrayList<>();
         LocalTime time = LocalTime.now();
@@ -126,6 +135,15 @@ public class EnvoieSMUR {
         return envoies;
     }
 
+    /**
+     * insert into the table envoi_ressource the generated data
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @param bamus : list of every bamus not used
+     * @throws IOException
+     * @throws SQLException
+     */
     public static void insertSQL(String url,
                           String user,
                           String password, List<BAMU> bamus) throws IOException, SQLException {
