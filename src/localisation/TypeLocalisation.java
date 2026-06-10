@@ -48,6 +48,14 @@ public class TypeLocalisation {
                 '}';
     }
 
+    /**
+     * Génére une liste de type d'adresse ("Rue", "Avenue",...) pour être utilisé dans l'insertion dans la classe Location pour générer les adresses.
+     * Utilise un tableau Excel pour mettre tout les types d'adresse
+     *
+     * @author Lison Boo
+     * @return La liste des types d'adresse
+     * @throws IOException Si la feuille Excel utilisé pour la génération n'existe plus.
+     */
     public static List<TypeLocalisation> generateAllTypeLocalisation() throws IOException {
         try{
             List<TypeLocalisation> typesLocation = new ArrayList<TypeLocalisation>();
@@ -90,7 +98,7 @@ public class TypeLocalisation {
         }
     }
 
-    public static void insertSQL(String url,
+    /*public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException {
         try (Connection conn = DriverManager.getConnection(url, user, password)){
@@ -110,5 +118,5 @@ public class TypeLocalisation {
             e.printStackTrace();
         }
 
-    }
+    }*/
 }

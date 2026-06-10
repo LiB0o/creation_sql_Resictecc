@@ -93,6 +93,12 @@ public class Ambulance {
                 '}';
     }
 
+    /**
+     * Génére un numéro de téléphone qui commance par "08"
+     *
+     * @author Lison Boo
+     * @return une numéro de téléphone en String
+     */
     private static String randomTel(){
         String tel = "08";
         Random rand = new Random();
@@ -103,6 +109,14 @@ public class Ambulance {
         return  tel;
     }
 
+    /**
+     * Génére une liste d'ambulances privées pour être utilisé dans l'insertion dans la table assigné (llx_resisteccsamusmur_ambulances).
+     *
+     * @author Lison Boo
+     * @param nbAmbulance Nombre d'ambulances privées à générer
+     * @return
+     * @throws IOException vient de la fonction Localisation.generateAllLocation pour la lecture dans le fichier Excel
+     */
     public static List<Ambulance> generateAmbulance(int nbAmbulance) throws IOException {
         List<Ambulance> ambulances = new ArrayList<>();
 
@@ -125,6 +139,15 @@ public class Ambulance {
         return ambulances;
     }
 
+    /**
+     * Insert les ambulances privées dans la table de la base de données
+     *
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire l'insertion
+     * @param password mot de passe du compte de la base de données qui va faire l'insertion
+     * @throws IOException Voir la fonction generateAmbulance
+     * @throws SQLException Si il y a eu un problème lors de la connection ou insertion
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
@@ -161,6 +184,16 @@ public class Ambulance {
         }
     }
 
+    /**
+     * Collecte toutes les ambulances privées dans llx_resisteccsamusmur_ambulances.
+     *
+     * @author Marine Virot
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des ambulances privées
+     * @throws SQLException Si il y a eu un problème lors de la connection ou insertion
+     */
     public static List<Ambulance> collectSQL(String url, String user, String password) throws SQLException {
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
             List<Ambulance> listAmb = new ArrayList<>();

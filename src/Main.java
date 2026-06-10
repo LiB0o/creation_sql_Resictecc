@@ -18,6 +18,11 @@ import utilitaire.*;
 
 public class Main {
 
+    /**
+     * Efface le contenu des tables de la base de données
+     * @author Eloise
+     * @throws Exception Si la connection à la base de données ne marche pas
+     */
     public static void resetDatabase() throws Exception {
 
         try (

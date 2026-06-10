@@ -44,6 +44,16 @@ public class Localisation {
         this.id = id;
     }
 
+    /**
+     * Génére une liste d'adresse pour être utilisé dans l'insertion dans les tables nécessitant une adresse.
+     * Utilise un tableau Excel pour choisir aléatoirement un nom d'adresse (exemple: "Edward" dans "7 rue Edward")
+     *
+     * @author Lison Boo
+     * @param nb_location Désigne le nombre d'adresse à générer
+     * @return La liste des adresses
+     * @throws IOException Si la feuille Excel utilisé pour la génération n'existe plus.
+     */
+
     public static List<Localisation> generateAllLocation(int nb_location) throws IOException{
         try{
             Random rand = new Random();
