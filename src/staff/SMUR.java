@@ -69,6 +69,13 @@ public class SMUR {
                 '}';
     }
 
+    /**
+     * Créer tout les SMUR avec une feuille Excel
+     *
+     * @author Lison Boo
+     * @return Liste de SMUR
+     * @throws IOException Erreur si la feuille Excel n'existe pas
+     */
     public static List<SMUR> generateAllSMUR() throws IOException {
         try{
             List<SMUR> smurs = new ArrayList<SMUR>();
@@ -108,6 +115,16 @@ public class SMUR {
         }
     }
 
+    /**
+     * Collecte tout les SMUR
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des SMUR
+     * @throws SQLException Erreur si la connexion/lecture se déroule mal
+     */
     public static List<SMUR> collectSQL(String url,
                                                String user,
                                                String password) throws SQLException {
@@ -136,6 +153,15 @@ public class SMUR {
         }
     }
 
+    /**
+     * Insert la liste des SMUR dans la table llx_resisteccsamusmur_smur
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire l'insertion
+     * @param password mot de passe du compte de la base de données qui va faire l'insertion
+     * @throws IOException voir generateAllSMUR
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException {
