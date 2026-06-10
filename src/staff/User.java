@@ -72,16 +72,8 @@ public class User {
         this.adresse = adresse;
     }
 
-    public void setBool_admin(int bool_admin) {
-        this.bool_admin = bool_admin;
-    }
-
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public void setRole_code(int role_code) {
-        this.role_code = role_code;
     }
 
     public void setLastname(String lastname) {
@@ -94,18 +86,6 @@ public class User {
 
     public void setTel(String tel) {
         this.tel = tel;
-    }
-
-    public void setDate_naissance(Date date_naissance) {
-        this.date_naissance = date_naissance;
-    }
-
-    public void setDate_crea_compte(Date date_crea_compte) {
-        this.date_crea_compte = date_crea_compte;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public void setPassword(String password){
@@ -137,7 +117,19 @@ public class User {
                 '}';
     }
 
-    public static List<User> generateAllPartitipants( int nbUser) throws SQLException, IOException {
+    /**
+     * Génére tout les participants pour l'exercice
+     * Compte admins utilisable dans Dolibarr
+     * login : participantx
+     * mdp : participantx
+     *
+     * (x étant un nombre de 1 à nbUser)
+     *
+     * @author Lison Boo
+     * @param nbUser nombre de participants
+     * @return Liste des participants
+     */
+    public static List<User> generateAllPartitipants( int nbUser) {
 
         List<User> users = new ArrayList<>();
         Random rand = new Random();
@@ -157,8 +149,15 @@ public class User {
         return users;
     }
 
-
-    public static List<User> generateAllFemaleUser( int nbUser) throws SQLException, IOException {
+    /**
+     * Créer tout les utilisateurs Dolibarr feminin via feuille Excel
+     *
+     * @author Lison Boo
+     * @param nbUser nombre de user feminin à créer
+     * @return liste de users feminin
+     * @throws IOException Erreur si la feuille Excel n'existe pas
+     */
+    public static List<User> generateAllFemaleUser( int nbUser) throws IOException {
 
         List<User> users = new ArrayList<>();
         String cryptedPassword = Utils.chiffrementPassword();
@@ -207,7 +206,15 @@ public class User {
         return users;
     }
 
-    public static List<User> generateAllMaleUser( int nbUser) throws SQLException, IOException {
+    /**
+     * Créer tout les utilisateurs Dolibarr masculin via feuille Excel
+     *
+     * @author Lison Boo
+     * @param nbUser nombre de user masculin à créer
+     * @return liste de users masculin
+     * @throws IOException Erreur si la feuille Excel n'existe pas
+     */
+    public static List<User> generateAllMaleUser( int nbUser) throws IOException {
 
         List<User> users = new ArrayList<>();
         String cryptedPassword = Utils.chiffrementPassword();
@@ -257,6 +264,12 @@ public class User {
     }
 
 
+    /**
+     * Génére un numéro de téléphone commançant par 07
+     *
+     * @author Lison Boo
+     * @return Un numéro de téléphone en format String
+     */
     private static String randomTel(){
         String tel = "07";
         Random rand = new Random();
@@ -267,6 +280,16 @@ public class User {
         return  tel;
     }
 
+    /**
+     * Insert tout les user (participants, femme, homme) dans llx_user
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire l'insertion
+     * @param password mot de passe du compte de la base de données qui va faire l'insertion
+     * @throws IOException Voir generateAllFemaleUser & generateAllMaleUser
+     * @throws SQLException Erreur si la connexion/insertion se déroule mal
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException, SQLException {
@@ -307,7 +330,13 @@ public class User {
     }
 
 
-
+    /**
+     * Change les logins de user masculin & feminin en cas de doublon)
+     *
+     * @author Lison Boo
+     * @param users liste des user
+     * @return Liste des users avec des logins uniques
+     */
     private static List<User> rendreUniques(List<User> users) {
 
         Map<String, Integer> compteur = new HashMap<>();
@@ -330,6 +359,16 @@ public class User {
         return resultat;
     }
 
+    /**
+     * Collecte tout les users
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des User
+     * @throws SQLException Erreur en cas de mauvaise connexion/lecture
+     */
     public static List<User> collectSQL(String url,
                                        String user,
                                        String password) throws SQLException {
@@ -360,6 +399,16 @@ public class User {
         }
     }
 
+    /**
+     * Collecte les users ayant pour job "Médecin régulateur"
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des Médecins régulateurs
+     * @throws SQLException Erreur en cas de mauvaise connexion/lecture
+     */
     public static List<User> collectSQL_Regulator(String url,
                                         String user,
                                         String password) throws SQLException {
@@ -400,6 +449,16 @@ public class User {
         }
     }
 
+    /**
+     * Collecte les users ayant pour job "Opérateur"
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des Opérateurs
+     * @throws SQLException Erreur en cas de mauvaise connexion/lecture
+     */
     public static List<User> collectSQL_Operator(String url,
                                                   String user,
                                                   String password) throws SQLException {
@@ -434,6 +493,16 @@ public class User {
         }
     }
 
+    /**
+     * Collecte les users ayant pour job "Infirmier"
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des Infirmiers
+     * @throws SQLException Erreur en cas de mauvaise connexion/lecture
+     */
     public static List<User> collectSQL_Infirmier(String url,
                                                   String user,
                                                   String password) throws SQLException {
@@ -474,6 +543,16 @@ public class User {
         }
     }
 
+    /**
+     * Collecte les users ayant pour job "Ambulancier"
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des Ambulanciers
+     * @throws SQLException Erreur en cas de mauvaise connexion/lecture
+     */
     public static List<User> collectSQL_Ambulancier(String url,
                                                   String user,
                                                   String password) throws SQLException {
@@ -514,6 +593,16 @@ public class User {
         }
     }
 
+    /**
+     * Collecte les users ayant pour job "Médecin"
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des Médecins
+     * @throws SQLException Erreur en cas de mauvaise connexion/lecture
+     */
     public static List<User> collectSQL_Med(String url,
                                                     String user,
                                                     String password) throws SQLException {
