@@ -44,6 +44,15 @@ public class Join_Skill_User {
                 '}';
     }
 
+    /**
+     * Read the excel GL_SQL_datas.xlsx to generate a list of link between users and skill
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @param date : the date used for generating data
+     * @return list of link between skill and user ready to be inserted
+     * @throws IOException
+     */
     public static List<Join_Skill_User> generateAllJoin(String url, String user, String password, LocalDate date) throws IOException {
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
             List<Join_Skill_User> listSkUs = new ArrayList<>();
@@ -101,6 +110,15 @@ public class Join_Skill_User {
         }
     }
 
+    /**
+     * insert into the table skillrank of Dolibarr the generated data
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @param date : the date used for generating data
+     * @throws IOException
+     * @throws SQLException
+     */
     public static void insertSQL(String url, String user, String password, LocalDate date) throws IOException, SQLException {
         List<Join_Skill_User> listJoin = Join_Skill_User.generateAllJoin(url,user,password, date);
         List<User> listUser = User.collectSQL(url, user, password);
@@ -134,6 +152,14 @@ public class Join_Skill_User {
         }
     }
 
+    /**
+     * collect from the database the list of every link between user and skill stored
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @return list of link collected from the database
+     * @throws SQLException
+     */
     public static List<Join_Skill_User> collectSQL(String url, String user, String password) throws SQLException {
         try (Connection conn = DriverManager.getConnection(url, user, password)){
             List<Join_Skill_User> listJoin = new ArrayList<>();

@@ -74,6 +74,12 @@ public class Skill {
                 ", date_validite='" + date_validite + "\'}";
     }
 
+    /**
+     * Read the excel GL_SQL_datas.xlsx to generate a list of skill
+     * @param date : the date used for generating data
+     * @return list of skill ready to be inserted
+     * @throws IOException
+     */
     public static List<Skill> generateAllSkill(LocalDate date) throws IOException {
         try {
             List<Skill> skills = new ArrayList<>();
@@ -117,6 +123,13 @@ public class Skill {
         }
     }
 
+    /**
+     * collect from the database the list of every skill stored
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @return list of skill collected from the database
+     */
     public static List<Skill> collectSQL(String url, String user, String password) {
         try (Connection conn = DriverManager.getConnection(url, user, password)){
             List<Skill> skills = new ArrayList<>();
@@ -145,6 +158,15 @@ public class Skill {
         }
     }
 
+    /**
+     * insert into the table skill of Dolibarr the generated data
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @param date : the date used for generating data
+     * @throws IOException
+     * @throws SQLException
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password, LocalDate date) throws IOException, SQLException {

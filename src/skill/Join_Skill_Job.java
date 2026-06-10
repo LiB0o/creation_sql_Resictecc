@@ -39,6 +39,15 @@ public class Join_Skill_Job {
                 '}';
     }
 
+    /**
+     * Read the excel GL_SQL_datas.xlsx to generate a list of link between jobs and skill
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @param date : the date used for generating data
+     * @return list of link between skill and job ready to be inserted
+     * @throws IOException
+     */
     public static List<Join_Skill_Job> generateAllJoin(String url, String user, String password, LocalDate date) throws IOException {
         try {
             List<Join_Skill_Job> listJoin = new ArrayList<>();
@@ -89,6 +98,15 @@ public class Join_Skill_Job {
     }
 
 
+    /**
+     * insert into the table skillrank of Dolibarr the generated data
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @param date : the date used for generating data
+     * @throws IOException
+     * @throws SQLException
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password, LocalDate date) throws IOException, SQLException {
@@ -120,6 +138,12 @@ public class Join_Skill_Job {
     }
 
 
+    /**
+     * collect every skill linked to a specific job
+     * @param conn : connexion to the database
+     * @param jobId : id of the job
+     * @return list of skill linked to jobId
+     */
     public static List<Skill> collectSkillsByJob(Connection conn, int jobId) {
         try {
             List<Skill> skills = new ArrayList<>();
