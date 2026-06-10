@@ -56,6 +56,11 @@ public class TypeVecteur {
     }
 
 
+    /**
+     * Read the excel GL_SQL_datas.xlsx to generate a list of type_vecteur
+     * @return list of type_vecteur ready to be inserted
+     * @throws IOException
+     */
     public static List<TypeVecteur> generateAllTypeVecteur() throws IOException {
         try{
             List<TypeVecteur> typesVecteur = new ArrayList<TypeVecteur>();
@@ -93,6 +98,14 @@ public class TypeVecteur {
         }
     }
 
+    /**
+     * collect from the database the list of every type_vecteur stored
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @return list of type_vecteur collected from the database
+     * @throws SQLException
+     */
     public static List<TypeVecteur> collectSQL(String url,
                                                String user,
                                                String password) throws SQLException {
@@ -121,6 +134,13 @@ public class TypeVecteur {
         }
     }
 
+    /**
+     * insert into the table type_vecteur the generated data
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @throws IOException
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException {

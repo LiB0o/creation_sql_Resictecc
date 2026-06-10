@@ -92,6 +92,15 @@ public class Materiel {
                 '}';
     }
 
+    /**
+     * Read the excel GL_SQL_datas.xlsx to generate a list of materiel
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @param date : the date used for generating data
+     * @return list of materiel ready to be inserted
+     * @throws IOException
+     */
     public static List<Materiel> generateAllMateriel(String url, String user, String password, LocalDate date) throws IOException {
         try{
             List<Materiel> materiels = new ArrayList<>();
@@ -188,6 +197,14 @@ public class Materiel {
          return -1;
     }
 
+    /**
+     * insert into the table materiels the generated data
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @param date : the date used for generating data
+     * @throws IOException
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password, LocalDate date) throws IOException {
