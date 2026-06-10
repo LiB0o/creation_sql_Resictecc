@@ -61,9 +61,19 @@ public class Join_Staff_Job {
                 '}';
     }
 
+    /**
+     * Créer la liste des lien Job_Staff à insérer
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @param date Date de l'exercice
+     * @return Liste de jointure
+     */
     public static List<Join_Staff_Job> generateAllJoin(String url,
                                                       String user,
-                                                      String password, LocalDate date) throws IOException {
+                                                      String password, LocalDate date) {
         try{
             List<Join_Staff_Job> join_staff_jobs = new ArrayList<>();
             List<Job> jobs = Job.collectSQL(url,user,password);
@@ -92,9 +102,19 @@ public class Join_Staff_Job {
         }
     }
 
+    /**
+     * Insert la liste de jointure dans la table llx_hrm_job_user
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire l'insertion
+     * @param password mot de passe du compte de la base de données qui va faire l'insertion
+     * @param date Date de l'exercice
+     * @throws SQLException Si la connection/insertion se passe mal
+     */
     public static void insertSQL(String url,
                                  String user,
-                                 String password, LocalDate date) throws IOException, SQLException {
+                                 String password, LocalDate date) throws SQLException {
         List<Join_Staff_Job> listJoin = Join_Staff_Job.generateAllJoin(url,user,password, date);
         try (Connection conn = DriverManager.getConnection(url, user, password)){
 
@@ -117,6 +137,14 @@ public class Join_Staff_Job {
         }
     }
 
+    /**
+     * Collecte toute les jointures Job_Staff
+     *
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des jointures
+     */
     public static List<Join_Staff_Job> collectSQL(String url, String user, String password) {
         try (Connection conn = DriverManager.getConnection(url, user, password)){
             List<Join_Staff_Job> list = new ArrayList<>();
@@ -139,6 +167,16 @@ public class Join_Staff_Job {
         }
     }
 
+    /**
+     * Retourne un boolean selon le job d'un user dont on connaît l'id
+     *
+     * @author Marine Virot
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @param id_user id du user recherché
+     * @return True si le job est RH SMUR, Infirmier, Médecin ou Ambulancier sinon False
+     */
     public static boolean hasSMURJob(String url, String user, String password, int id_user) {
         try (Connection conn = DriverManager.getConnection(url, user, password)){
             String sql = "SELECT j.label FROM llx_hrm_job j " +
@@ -163,6 +201,16 @@ public class Join_Staff_Job {
         }
     }
 
+    /**
+     * Retourne un boolean selon le job d'un user dont on connaît l'id
+     *
+     * @author Marine Virot
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @param id_user id du user recherché
+     * @return True si le job est CESU staff sinon False
+     */
     public static boolean isCESUStaff(String url, String user, String password, int id_user) {
         try (Connection conn = DriverManager.getConnection(url, user, password)){
             String sql = "SELECT j.label FROM llx_hrm_job j " +
