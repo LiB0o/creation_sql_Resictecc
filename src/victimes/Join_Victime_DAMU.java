@@ -30,6 +30,13 @@ public class Join_Victime_DAMU {
         return id_type_damu;
     }
 
+    /**
+     * Read the excel GL_SQL_datas.xlsx to generate a list of link between victim and DAMU
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @return list of link between victim and DAMU ready to be inserted
+     */
     public static List<Join_Victime_DAMU> generateAllJoin(String url, String user, String password) {
         try {
             List<Join_Victime_DAMU> listJoin = new ArrayList<>();
@@ -66,6 +73,13 @@ public class Join_Victime_DAMU {
         }
     }
 
+    /**
+     * check id idVic is already used or not and if it is, we relaunch with another id
+     * @param idsVictimes : list of ids already used
+     * @param idVic : id of victim having to be verified
+     * @param range : number of total victims
+     * @return id of victim not used
+     */
     private static int uniqueId(ArrayList<Integer> idsVictimes, int idVic, int range) {
 
         for(int ids : idsVictimes){
@@ -79,6 +93,13 @@ public class Join_Victime_DAMU {
     }
 
 
+    /**
+     * insert into the table concerner the generated data
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @throws SQLException
+     */
     public static void insertSQL(String url, String user, String password) throws SQLException {
         List<Join_Victime_DAMU> listJoin = Join_Victime_DAMU.generateAllJoin(url, user, password);
 
@@ -97,6 +118,13 @@ public class Join_Victime_DAMU {
         }
     }
 
+    /**
+     * collect from the database the list of every link between victim and DAMU stored
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @return list of link collected from the database
+     */
     public static List<Join_Victime_DAMU> collectSQL(String url, String user, String password){
         List<Join_Victime_DAMU> list_join = new ArrayList<>();
 

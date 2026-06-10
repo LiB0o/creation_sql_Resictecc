@@ -103,8 +103,8 @@ public class Victime {
     }
 
     /**
-     * Generate a random tel number starting with "06"
-     * @return
+     * Generate a random phone number starting with "06"
+     * @return phone number generated
      */
     private static String randomTel(){
         String tel = "06";
@@ -118,8 +118,8 @@ public class Victime {
 
     /**
      * Read the excel GL_SQL_datas.xlsx to generate a number of male person in a list to be insert in the assigned function
-     * @param nbUser : number of male victime
-     * @return
+     * @param nbUser : number of male victim
+     * @return list of male victim
      * @throws IOException
      */
     public static List<Victime> generateVictimesMale(int nbUser) throws IOException {
@@ -171,8 +171,8 @@ public class Victime {
 
     /**
      * Read the excel GL_SQL_datas.xlsx to generate a number of female person in a list to be insert in the assigned function
-     * @param nbUser : number of female victime
-     * @return
+     * @param nbUser : number of female victim
+     * @return list of female victim
      * @throws IOException
      */
     public static List<Victime> generateVictimesFemale(int nbUser) throws IOException {
@@ -266,6 +266,14 @@ public class Victime {
     }
 
 
+    /**
+     * collect from the database the list of every victim stored
+     * @param url : url toward the database
+     * @param user : login to the database
+     * @param password : password of the login
+     * @return list of victims collected from the database
+     * @throws SQLException
+     */
     public static List<Victime> collectSQL(String url, String user, String password) throws SQLException {
         try (Connection conn = DriverManager.getConnection(url, user, password)){
             List<Victime> listVic = new ArrayList<>();
