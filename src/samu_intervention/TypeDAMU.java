@@ -51,6 +51,12 @@ public class TypeDAMU {
                 '}';
     }
 
+    /**
+     * Créer une liste de type de DAMU à insérer
+     *
+     * @author Lison Boo
+     * @return La liste des types
+     */
     public static List<TypeDAMU> generateAllTypeDAMU() {
         try{
             List<TypeDAMU> typesBAMU = new ArrayList<TypeDAMU>();
@@ -88,6 +94,15 @@ public class TypeDAMU {
         }
     }
 
+    /**
+     * Insert type des BAMU dans la table llx_resisteccsamusmur_type_bamu
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire l'insertion
+     * @param password mot de passe du compte de la base de données qui va faire l'insertion
+     * @throws IOException voir generateAllTypeDAMU
+     */
     public static void insertSQL(String url,
                                  String user,
                                  String password) throws IOException {
@@ -108,7 +123,16 @@ public class TypeDAMU {
         }
     }
 
-    public static List<TypeDAMU> collect(String url, String user, String password)throws IOException{
+    /**
+     * Collecte tout les types DAMU de la table llx_resisteccsamusmur_type_bamu
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @return Liste des types de DAMU
+     */
+    public static List<TypeDAMU> collect(String url, String user, String password){
         List<TypeDAMU> list_DAMU = new ArrayList<>();
 
         try(Connection conn = DriverManager.getConnection(url, user, password)){
@@ -135,7 +159,17 @@ public class TypeDAMU {
         return list_DAMU;
     }
 
-    public static TypeDAMU collectOne(String url, String user, String password, int id)throws IOException{
+    /**
+     * Collecte un type de BAMU selon l'id
+     *
+     * @author Lison Boo
+     * @param url adresse url vers la base de données
+     * @param user login du compte de la base de données qui va faire la lecture
+     * @param password mot de passe du compte de la base de données qui va faire la lecture
+     * @param id id du type de BAMU recherché
+     * @return le type vide (si id non trouvé) ou type avec infos complétes
+     */
+    public static TypeDAMU collectOne(String url, String user, String password, int id){
         TypeDAMU t = new TypeDAMU();
 
         try(Connection conn = DriverManager.getConnection(url, user, password)){
