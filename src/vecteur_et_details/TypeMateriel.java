@@ -110,7 +110,6 @@ public class TypeMateriel {
                                  String password) throws IOException {
         List<TypeMateriel> listTypeMateriel = generateAllTypeMateriel();
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(TypeMateriel t : listTypeMateriel){
                 String sql = "INSERT INTO `llx_resisteccsamusmur_type_materiels`(`nom_type_materiel`) " +
@@ -140,8 +139,6 @@ public class TypeMateriel {
             List<TypeMateriel> typeMateriels = new ArrayList<>();
 
             Statement stat = null;
-
-            System.out.println("Connected to the DB");
 
             stat = conn.createStatement();
             String sql = "SELECT * FROM llx_resisteccsamusmur_type_materiels";

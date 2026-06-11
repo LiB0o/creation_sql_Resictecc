@@ -210,7 +210,6 @@ public class Materiel {
                                  String password, LocalDate date) throws IOException {
         List<Materiel> listMateriel = generateAllMateriel(url,user,password, date);
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(Materiel m : listMateriel){
                 String sql = "INSERT INTO `llx_resisteccsamusmur_materiels`(`nom`, `date_peremption`, `id_type_materiel`, `immatriculation`) " +

@@ -236,7 +236,6 @@ public class Victime {
         Random rand = new Random();
 
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(Victime u : users){
                 String sql = "INSERT INTO " +

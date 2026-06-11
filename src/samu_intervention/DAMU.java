@@ -340,8 +340,6 @@ public class DAMU {
 
             Statement stat = null;
 
-            System.out.println("Connected to the DB");
-
             stat = conn.createStatement();
             String sql = "SELECT * FROM llx_resisteccsamusmur_damu WHERE id_demande = '"+idDAMU+"'";
             ResultSet resultSQL = stat.executeQuery(sql);

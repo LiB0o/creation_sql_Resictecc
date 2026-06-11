@@ -151,7 +151,6 @@ public class EnvoieSMUR {
         List<EnvoieSMUR>envoies = generateAllEnvoie(url, user, password, bamus);
 
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(EnvoieSMUR e : envoies){
                 String sql = "INSERT INTO " +

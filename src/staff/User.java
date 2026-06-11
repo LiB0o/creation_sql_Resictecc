@@ -612,8 +612,6 @@ public class User {
 
             Statement stat = null;
 
-            //System.out.println("Connected to the DB");
-
             stat = conn.createStatement();
             String sql = "SELECT * \n" +
                     "FROM llx_hrm_job\n" +

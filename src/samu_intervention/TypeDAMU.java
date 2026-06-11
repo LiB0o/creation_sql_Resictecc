@@ -108,7 +108,6 @@ public class TypeDAMU {
                                  String password) throws IOException {
         List<TypeDAMU> listTypeDamu = generateAllTypeDAMU();
         try (Connection conn = DriverManager.getConnection(url, user, password)){
-            System.out.println("Connected to the DB");
 
             for(TypeDAMU t : listTypeDamu){
                 String sql = "INSERT INTO `llx_resisteccsamusmur_type_bamu`(`nom`) " +
