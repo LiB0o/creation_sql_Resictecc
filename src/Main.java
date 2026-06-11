@@ -163,10 +163,6 @@ public class Main {
 
             List<BAMU> bamus = Join_BAMU_All.insertSQL(URL_OP, USER, PASSWORD);
 
-            for(BAMU b : bamus){
-                System.out.println(b.toString());
-            }
-
             EnvoieSMUR.insertSQL(URL_OP, USER, PASSWORD, bamus);
 
             }catch(Exception e){
