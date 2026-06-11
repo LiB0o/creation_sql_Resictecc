@@ -71,6 +71,7 @@ public class Main {
             stmt.executeUpdate("DELETE FROM llx_resisteccsamusmur_type_vecteur");
             stmt.executeUpdate("DELETE FROM llx_resisteccsamusmur_type_bamu");
 
+            stmt.execute("SET FOREIGN_KEY_CHECKS = 1");
             // HRM
             stmt.executeUpdate("DELETE FROM llx_hrm_skillrank_extrafields");
             stmt.executeUpdate("DELETE FROM llx_hrm_skillrank");
@@ -91,7 +92,7 @@ public class Main {
             stmt.executeUpdate("ALTER TABLE llx_resisteccsamusmur_type_materiels AUTO_INCREMENT = 1");
 
             // Réactivation des contraintes FK
-            stmt.execute("SET FOREIGN_KEY_CHECKS = 1");
+
 
             System.out.println("Base réinitialisée avec succès.");
         }
