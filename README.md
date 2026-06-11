@@ -15,6 +15,15 @@ Après avoir installé l'archive, allez où se trouvent les .class (réalisés l
 
 [mot de passe administrator si il n'est pas vide] : Mot de passe utilisé pour se connecter au compte administrateur pour modifier la base de données
 
+Un total de 20 comptes participants vont être créés pour les exercices (en plus des autres comptes factices).
+Ils auront les permissions administrateur dans Dolibarr.
+Pour se connecter à un compte :
+
+login : participants
+mot de passe : participants
+
+(x est le numéro du participant de 1 à 20)
+
  ## Modifications possibles
 
 Si vous souhaitez rajouter/retirer des options dans l'insertion (plus ou moins de noms/prénoms différents par exemple), vous pouvez modifier le fichier Excel dans le dossier "assets"
