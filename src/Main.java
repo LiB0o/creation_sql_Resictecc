@@ -31,6 +31,7 @@ public class Main {
         ) {
 
             // Suppression des utilisateurs générés
+            stmt.executeUpdate("DELETE FROM llx_user_rights WHERE fk_user > 15000");
             stmt.executeUpdate("DELETE FROM llx_user WHERE rowid > 15000");
             stmt.executeUpdate("ALTER TABLE llx_user AUTO_INCREMENT = 15001");
 
